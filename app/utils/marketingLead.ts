@@ -2,7 +2,7 @@ import type { EngineSettings, MarketingLeadInput } from '../types/api'
 
 const EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/
 
-export const MARKETING_LEAD_POSTED_KEY = 'anakata-checkout-marketing-lead'
+export const MARKETING_LEAD_POSTED_KEY = 'iconic-checkout-marketing-lead'
 
 export type MarketingLeadAttempt = {
   ticked: boolean

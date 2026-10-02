@@ -37,4 +37,4 @@ export type {
   SurveyView,
   MarketingLeadInput,
   UnsubscribeView
-} from '#anakata-ui/app/types'
+} from '#iconic-ui/app/types'

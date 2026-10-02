@@ -2,7 +2,7 @@ import type { EngineDeparture, EngineOffer, EngineRates } from '../types/api'
 
 /**
  * Exact `text` values from
- * anakata-api/tests/Unit/Support/Inventory/EngineLabelTest.php
+ * iconic-api/tests/Unit/Support/Inventory/EngineLabelTest.php
  * (copied, not retyped). Feed-visible labels only —
  * `NOT SHOWN` and `CHARTERED — NOT SHOWN` are filtered out by EngineFeed.
  */

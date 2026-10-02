@@ -1,6 +1,6 @@
 export type AnalyticsConsent = 'unset' | 'accepted' | 'refused'
 
-export const ANALYTICS_STORAGE_KEY = 'anakata-engine-analytics'
+export const ANALYTICS_STORAGE_KEY = 'iconic-engine-analytics'
 
 export function analyticsAllowed(consent: AnalyticsConsent, measurementId: string): boolean {
   return consent === 'accepted' && measurementId.trim() !== ''

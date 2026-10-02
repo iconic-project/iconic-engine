@@ -50,7 +50,7 @@ describe('consent gating of track', () => {
 
   it('reads a stored choice per visitor', () => {
     const storage = {
-      getItem: (key: string) => key === 'anakata-engine-analytics' ? 'accepted' : null
+      getItem: (key: string) => key === 'iconic-engine-analytics' ? 'accepted' : null
     }
     expect(readStoredConsent(storage)).toBe('accepted')
     expect(readStoredConsent({ getItem: () => null })).toBe('unset')

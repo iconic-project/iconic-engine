@@ -27,7 +27,7 @@ describe('checkout marketing lead', () => {
   it('posts once, and only when the box is ticked with an address and a version', () => {
     const ready = {
       ticked: true,
-      email: 'ada@anakata.test',
+      email: 'ada@iconic.test',
       firstName: 'Ada',
       version: 'v1 (pending LEG-002)',
       posted: false,
@@ -40,7 +40,7 @@ describe('checkout marketing lead', () => {
     expect(marketingLeadBody({ ...ready, version: '' })).toBeNull()
 
     expect(marketingLeadBody(ready)).toEqual({
-      email: 'ada@anakata.test',
+      email: 'ada@iconic.test',
       first_name: 'Ada',
       consent: true,
       version: 'v1 (pending LEG-002)',

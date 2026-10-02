@@ -8,12 +8,12 @@ describe('promo state', () => {
     expect(invalid.phase).toBe('invalid')
     expect(invalid.message).toBe('This code is not valid')
 
-    const applied = applyPromoResult(empty, 'ANAKATA10', true, null, 'Anakata welcome −10% applied')
+    const applied = applyPromoResult(empty, 'ICONIC10', true, null, 'Iconic welcome −10% applied')
     expect(applied.phase).toBe('applied')
-    expect(applied.code).toBe('ANAKATA10')
+    expect(applied.code).toBe('ICONIC10')
     expect(applied.locked).toBe(true)
 
-    const removed = applyPromoResult(applied, 'ANAKATA10', true, null, null)
+    const removed = applyPromoResult(applied, 'ICONIC10', true, null, null)
     expect(removed.phase).toBe('empty')
     expect(removed.locked).toBe(false)
 

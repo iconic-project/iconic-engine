@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { components } from '#anakata-ui/app/types/api'
+import type { components } from '#iconic-ui/app/types/api'
 import type { CharterProposalView } from '../../types/api'
 import { acceptBlocked, proposalFormState } from '../../utils/charterProposal'
 import { engineErrorMessage } from '../../utils/engineError'

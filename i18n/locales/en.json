@@ -1,13 +1,13 @@
 {
   "seo": {
-    "description": "Book an Anakata Galápagos yacht expedition — sixteen guests at a time."
+    "description": "Book an Iconic Galápagos yacht expedition — sixteen guests at a time."
   },
   "nav": {
     "expeditions": "Expeditions",
     "charter": "Private Charter"
   },
   "brand": {
-    "alt": "ANAKATA",
+    "alt": "ICONIC",
     "subtitle": "INTIMATE YACHT EXPEDITIONS"
   },
   "hero": {
@@ -25,9 +25,9 @@
     "confirmation": "6 · Confirmation"
   },
   "footer": {
-    "line1": "Anakata · Intimate yacht expeditions · Galápagos",
+    "line1": "Iconic · Intimate yacht expeditions · Galápagos",
     "line2Before": "0°40′S 90°33′W",
-    "line2After": " · info{'@'}anakata.co · anakata.co"
+    "line2After": " · info{'@'}iconic.co · iconic.co"
   },
   "pages": {
     "home": "Book Your Expedition",
@@ -56,7 +56,7 @@
     "childrenCount": "{n} child | {n} children",
     "footnote": "Maximum {maxCabin} guests per cabin · {maxYacht} guests per yacht.",
     "footnoteAdult": "Every cabin with children includes an adult.",
-    "contactEmail": "info{'@'}anakata.co"
+    "contactEmail": "info{'@'}iconic.co"
   },
   "itineraries": {
     "title": "Choose your itinerary",
@@ -203,7 +203,7 @@
     "network": "We could not reach the reservation system. Check your connection and try again."
   },
   "map": {
-    "eyebrow": "Anakata · Galápagos",
+    "eyebrow": "Iconic · Galápagos",
     "daysAria": "Itinerary days",
     "dayAria": "Day {n}, {wd}: {title}",
     "foot": "Hover a day to preview — click to pin its landing"
@@ -249,8 +249,8 @@
     "advisor": "I'm a travel advisor booking on behalf of a client",
     "notes": "Additional notes (optional)",
     "notesPh": "Celebrations, questions, special requirements…",
-    "marketing": "I'd like to receive news and expedition ideas from Anakata (optional)",
-    "checkoutMarketing": "Anakata may email you news and expedition ideas. You can stop these at any time from the link in those emails. Unticking this box does not withdraw a request already sent. Wording is pending (LEG-002).",
+    "marketing": "I'd like to receive news and expedition ideas from Iconic (optional)",
+    "checkoutMarketing": "Iconic may email you news and expedition ideas. You can stop these at any time from the link in those emails. Unticking this box does not withdraw a request already sent. Wording is pending (LEG-002).",
     "guests": "Guests",
     "nationality": "Guest {n} · {cabin} · nationality",
     "chooseCountry": "Choose a country",
@@ -259,10 +259,10 @@
     "pngDob": "The PNG category estimate uses nationality and the 12-year cutoff. The final category depends on each guest's date of birth.",
     "fees": "Galápagos fees",
     "pngChoice": "Park entry fee (PNG)",
-    "pngCollect": "Anakata collects the park fee",
+    "pngCollect": "Iconic collects the park fee",
     "pngAirport": "I will pay at SCY airport",
     "tctChoice": "Transit Control Card (TCT)",
-    "tctCollect": "Anakata collects the TCT",
+    "tctCollect": "Iconic collects the TCT",
     "tctLater": "Arrange the TCT with the team later",
     "depositWording": "The deposit is on cruise charges only; extras and collected fees are due up to {hours} hours before departure.",
     "declarations": "Declarations",
@@ -333,9 +333,9 @@
   "unsubscribe": {
     "k": "Email",
     "title": "Unsubscribe",
-    "prompt": "Stop marketing email from Anakata.",
+    "prompt": "Stop marketing email from Iconic.",
     "button": "Unsubscribe",
-    "confirmed": "You will no longer receive marketing email from Anakata.",
+    "confirmed": "You will no longer receive marketing email from Iconic.",
     "transactional": "Messages about an existing booking still arrive.",
     "unknown": "This link is not valid."
   },

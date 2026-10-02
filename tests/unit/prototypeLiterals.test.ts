@@ -7,7 +7,7 @@ const EXTRA = ['.output']
 
 const FORBIDDEN = [
   /ANATARA/,
-  /Anakata I/,
+  /Iconic I/,
   /201–208/,
   /201-208/,
   /USD 13,300/,

@@ -1,6 +1,6 @@
 import { readStoredConsent } from './analyticsConsent'
 
-export const SESSION_STORAGE_KEY = 'anakata-engine-session'
+export const SESSION_STORAGE_KEY = 'iconic-engine-session'
 
 /** 30 days of inactivity, as this task states. Not a published rate. */
 export const SESSION_IDLE_MS = 30 * 24 * 60 * 60 * 1000

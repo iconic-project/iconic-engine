@@ -1,9 +1,9 @@
 import type { AttributionInput, AttributionTouch } from '../types/api'
 import { redactPagePath } from './pagePath'
 
-export const SESSION_TOUCH_KEY = 'anakata-engine-touch-session'
-export const FIRST_TOUCH_KEY = 'anakata-engine-touch-first'
-export const LAST_TOUCH_KEY = 'anakata-engine-touch-last'
+export const SESSION_TOUCH_KEY = 'iconic-engine-touch-session'
+export const FIRST_TOUCH_KEY = 'iconic-engine-touch-first'
+export const LAST_TOUCH_KEY = 'iconic-engine-touch-last'
 
 const UTM_KEYS = {
   utm_source: 'source',

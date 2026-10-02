@@ -3,7 +3,7 @@ import type { CabinSelection } from '../utils/cabProblems'
 import type { PromoState } from '../utils/promoState'
 import { emptyPromo } from '../utils/promoState'
 
-export const FLOW_STORAGE_KEY = 'anakata-engine-flow'
+export const FLOW_STORAGE_KEY = 'iconic-engine-flow'
 
 export type FlowGuest = {
   cabinCode: string

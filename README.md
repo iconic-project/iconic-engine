@@ -1,12 +1,12 @@
-# anakata-engine
+# iconic-engine
 
-Public booking engine for Anakata. Nuxt 4 with **SSR** on port **3000**. Extends the `anakata-ui` layer and applies engine-only visual overrides from the booking-engine prototype.
+Public booking engine for Iconic. Nuxt 4 with **SSR** on port **3000**. Extends the `iconic-ui` layer and applies engine-only visual overrides from the booking-engine prototype.
 
 | | |
 |---|---|
 | Port | **3000** |
 | Render | SSR |
-| Layer | local `../anakata-ui`; Netlify `github:anakata-project/anakata-ui#v0.17.1` |
+| Layer | local `../iconic-ui`; Netlify `github:iconic-project/iconic-ui#dev` |
 | API | `NUXT_PUBLIC_API_BASE` (default `http://localhost:8000`) |
 
 The API must already allow this origin. CORS is configured on the API via `FRONTEND_ENGINE_URL=http://localhost:3000`.
@@ -26,7 +26,7 @@ NUXT_PUBLIC_API_BASE=http://localhost:8000
 
 ## Run
 
-From the Cursor workspace, use **Anakata: start everything** — it starts the API and `pnpm dev --port 3000` for this app.
+From the Cursor workspace, use **Iconic: start everything** — it starts the API and `pnpm dev --port 3000` for this app.
 
 Or locally:
 
