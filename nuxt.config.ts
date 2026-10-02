@@ -5,9 +5,9 @@ function isUiLayer(cwd: string): boolean {
   return existsSync(resolve(cwd, 'app/types/engine.ts'))
 }
 
-const localUi = resolve(import.meta.dirname, '../anakata-ui')
+const localUi = resolve(import.meta.dirname, '../iconic-ui')
 const uiLayer = existsSync(localUi)
-  ? '../anakata-ui'
+  ? '../iconic-ui'
   : 'github:anakata-project/anakata-ui#v0.17.1'
 
 export default defineNuxtConfig({

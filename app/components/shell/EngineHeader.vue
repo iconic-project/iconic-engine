@@ -9,18 +9,7 @@ const { expeditionsOn } = useFlowStep()
       to="/"
       class="brand"
     >
-      <img
-        src="/brand/wordmark-dark.png"
-        :alt="t('brand.alt')"
-        class="brand-mark--dark"
-        draggable="false"
-      >
-      <img
-        src="/brand/wordmark-light.png"
-        :alt="t('brand.alt')"
-        class="brand-mark--light"
-        draggable="false"
-      >
+      <AnkWordmark />
       <small>{{ t('brand.subtitle') }}</small>
     </NuxtLink>
 
