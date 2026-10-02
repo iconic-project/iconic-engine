@@ -16,9 +16,9 @@ body {
 
 .disp {
   font-family: var(--font-display);
-  text-transform: uppercase;
+  text-transform: none;
   letter-spacing: 0;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .engine {
@@ -149,7 +149,7 @@ body {
 
 .heroband h1 {
   font-size: clamp(40px, 6vw, 68px);
-  font-weight: 700;
+  font-weight: 400;
   letter-spacing: 0;
   line-height: 1.05;
   margin-bottom: 16px;
@@ -169,22 +169,25 @@ body {
 .crumbs {
   display: flex;
   gap: 0;
-  border: 1px solid var(--hair);
-  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
   overflow: hidden;
-  margin-bottom: 44px;
+  margin-bottom: 32px;
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-xs);
 }
 
 .crumb {
   flex: 1;
-  padding: 13px 8px;
+  padding: 8px 6px;
   text-align: center;
   font-family: var(--font-sans);
   font-size: 11px;
+  font-weight: 400;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--iv38);
-  border-right: 1px solid var(--hair);
+  color: var(--fg-subtle);
+  border-right: 1px solid var(--border-subtle);
 }
 
 .crumb:last-child {
@@ -192,12 +195,12 @@ body {
 }
 
 .crumb.cur {
-  color: var(--forest-950);
-  background: var(--sand);
+  color: var(--fg-brand);
+  background: color-mix(in srgb, var(--hilo-blue-500) 12%, var(--bg-surface));
 }
 
 .crumb.done {
-  color: var(--coral);
+  color: var(--fg-brand);
 }
 
 .engine-footer {
@@ -252,18 +255,20 @@ body {
 }
 
 .btn {
-  display: inline-block;
-  background: var(--coral);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--hilo-blue-500);
   color: #fff;
   border: none;
   font-family: var(--font-sans);
   font-size: 13px;
+  line-height: 1.25;
   letter-spacing: 0;
   text-transform: none;
-  padding: 15px 32px;
+  padding: 8px 16px;
   cursor: pointer;
   transition: background 200ms var(--eo), transform 160ms var(--eo), border-color 200ms var(--eo), color 200ms var(--eo);
-
   border-radius: 8px;
   font-weight: 500;
 }
@@ -284,17 +289,17 @@ body {
 }
 
 .btn.cta .lb {
-  padding: 16px 26px 16px 32px;
+  padding: 8px 10px 8px 16px;
 }
 
 .btn.cta .ico {
-  width: 46px;
+  width: 28px;
   align-self: stretch;
   display: flex;
   align-items: center;
   justify-content: center;
   background: color-mix(in srgb, var(--neutral-950) 16%, transparent);
-  font-size: 14px;
+  font-size: 13px;
   transition: transform 200ms var(--eo);
 }
 
@@ -353,7 +358,8 @@ body {
 }
 
 .klabel {
-  color: var(--coral);
+  color: var(--fg-subtle);
+  font-weight: 400;
   margin-bottom: 14px;
   display: block;
 }
@@ -365,8 +371,9 @@ body {
 }
 
 h1.disp {
-  font-size: clamp(32px, 4vw, 46px);
-  line-height: 1.1;
+  font-size: clamp(28px, 3vw, 36px);
+  font-weight: 400;
+  line-height: 1.15;
   margin-bottom: 12px;
 }
 
@@ -420,9 +427,10 @@ html:not(.dark) .bookwrap {
   display: block;
   font-family: var(--font-sans);
   font-size: 11px;
+  font-weight: 400;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--coral);
+  color: var(--fg-subtle);
   margin-bottom: 6px;
 }
 
@@ -456,13 +464,15 @@ html:not(.dark) .bookwrap {
 .bb.act button {
   width: 100%;
   border: none;
-  background: var(--coral);
+  background: var(--hilo-blue-500);
   color: #fff;
   font-family: var(--font-sans);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 0 40px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  line-height: 1.25;
+  padding: 0 20px;
   cursor: pointer;
 }
 
@@ -498,10 +508,11 @@ html:not(.dark) .bookwrap {
 
 .mn {
   border: 1px solid var(--hair);
-  padding: 10px 0;
+  border-radius: 8px;
+  padding: 8px 0;
   text-align: center;
   font-family: var(--font-sans);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0;
   cursor: pointer;
   color: var(--iv62);
@@ -573,11 +584,12 @@ html:not(.dark) .bookwrap {
 }
 
 .stepper button {
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   background: transparent;
-  border: 1px solid var(--hair);
-  color: var(--ivory);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  color: var(--fg-default);
   cursor: pointer;
   font-size: 14px;
   line-height: 1;
@@ -610,8 +622,11 @@ html:not(.dark) .bookwrap {
 }
 
 .itin {
-  border: 1px solid var(--hair);
-  background: var(--forest-900);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  box-shadow: var(--shadow-xs);
+  background: var(--bg-surface);
+  overflow: hidden;
   animation: riseIn 300ms var(--eo) both;
 }
 
@@ -657,17 +672,19 @@ html:not(.dark) .bookwrap {
   font-family: var(--font-display);
   font-weight: 400;
   letter-spacing: 0;
-  text-transform: uppercase;
-  font-size: 20px;
-  margin-bottom: 10px;
+  text-transform: none;
+  font-size: 22px;
+  line-height: 1.2;
+  margin-bottom: 8px;
 }
 
 .itin .tagline {
   font-family: var(--font-sans);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--sand);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--fg-muted);
   min-height: 0;
   margin-bottom: 10px;
 }
@@ -687,13 +704,16 @@ html:not(.dark) .bookwrap {
 }
 
 .chip {
-  border: 1px solid var(--hair);
-  padding: 5px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 4px 10px;
   font-family: var(--font-sans);
   font-size: 11px;
+  font-weight: 400;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--iv62);
+  color: var(--fg-muted);
+  background: var(--bg-surface);
 }
 
 .itin .foot {
@@ -729,10 +749,13 @@ html:not(.dark) .bookwrap {
   display: flex;
   align-items: center;
   gap: 9px;
-  border: 1px solid var(--sand);
-  color: var(--sand);
+  border: 1px solid color-mix(in srgb, var(--hilo-blue-500) 35%, var(--border-subtle));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--hilo-blue-500) 10%, var(--bg-surface));
+  color: var(--fg-brand);
   font-family: var(--font-sans);
   font-size: 11px;
+  font-weight: 400;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   padding: 8px 12px;
@@ -893,13 +916,15 @@ html:not(.dark) .bookwrap {
 
 .deal {
   display: inline-block;
-  background: var(--sand);
-  color: var(--forest-950);
+  background: color-mix(in srgb, var(--hilo-blue-500) 10%, var(--bg-surface));
+  color: var(--fg-brand);
+  border-radius: 9999px;
   font-family: var(--font-sans);
   font-size: 11px;
+  font-weight: 400;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  padding: 3px 7px;
+  padding: 2px 8px;
   white-space: nowrap;
 }
 
@@ -943,8 +968,11 @@ html:not(.dark) .bookwrap {
 }
 
 .badge {
-  border: 1px solid var(--hair);
-  padding: 8px 16px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  box-shadow: var(--shadow-xs);
+  background: var(--bg-surface);
+  padding: 6px 12px;
   text-align: center;
 }
 
@@ -965,19 +993,21 @@ html:not(.dark) .bookwrap {
 }
 
 .badge.hl {
-  background: var(--coral);
-  border-color: var(--coral);
-  color: #fff;
+  background: color-mix(in srgb, var(--hilo-blue-500) 10%, var(--bg-surface));
+  border-color: color-mix(in srgb, var(--hilo-blue-500) 35%, var(--border-subtle));
+  color: var(--fg-brand);
 }
 
 .badge.hl span {
-  color: color-mix(in srgb, var(--neutral-950) 70%, transparent);
+  color: var(--fg-brand);
 }
 
 .hero {
   height: 300px;
   position: relative;
-  border: 1px solid var(--hair);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  box-shadow: var(--shadow-xs);
   margin-bottom: 22px;
   overflow: hidden;
 }
@@ -997,8 +1027,11 @@ html:not(.dark) .bookwrap {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1px;
-  background: var(--hair);
-  border: 1px solid var(--hair);
+  background: var(--border-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  box-shadow: var(--shadow-xs);
+  overflow: hidden;
   margin-bottom: 24px;
 }
 
@@ -1010,9 +1043,10 @@ html:not(.dark) .bookwrap {
 .fact .fl {
   font-family: var(--font-sans);
   font-size: 11px;
+  font-weight: 400;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--coral);
+  color: var(--fg-subtle);
   margin-bottom: 5px;
 }
 
@@ -1034,9 +1068,11 @@ html:not(.dark) .bookwrap {
 }
 
 .railbox {
-  border: 1px solid var(--hair);
-  background: var(--forest-950);
-  padding: 26px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  box-shadow: var(--shadow-xs);
+  background: var(--bg-surface);
+  padding: 24px;
   margin-bottom: 16px;
 }
 
@@ -1051,8 +1087,9 @@ html:not(.dark) .bookwrap {
 .railbox .amt {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 30px;
+  font-size: 28px;
   letter-spacing: 0;
+  line-height: 1.15;
   margin: 2px 0 14px;
 }
 
@@ -1098,8 +1135,10 @@ html:not(.dark) .bookwrap {
 }
 
 .railnote {
-  border: 1px solid var(--hair);
-  background: var(--forest-900);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  box-shadow: var(--shadow-xs);
+  background: var(--bg-surface);
   padding: 16px 18px;
   font-size: 12px;
   color: var(--iv62);
@@ -1115,13 +1154,17 @@ html:not(.dark) .bookwrap {
   font-family: var(--font-display);
   font-weight: 400;
   letter-spacing: 0;
-  text-transform: uppercase;
-  font-size: 16px;
+  text-transform: none;
+  font-size: 18px;
   margin: 8px 0 14px;
 }
 
 .dtable {
-  border: 1px solid var(--hair);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  box-shadow: var(--shadow-xs);
+  overflow: hidden;
+  background: var(--bg-surface);
   margin-bottom: 30px;
 }
 
@@ -1184,8 +1227,11 @@ html:not(.dark) .bookwrap {
 .tabs {
   display: flex;
   gap: 0;
-  border: 1px solid var(--hair);
+  border: 1px solid var(--border-subtle);
   border-bottom: none;
+  border-radius: 16px 16px 0 0;
+  overflow: hidden;
+  background: var(--bg-surface);
   flex-wrap: wrap;
 }
 
@@ -1203,26 +1249,29 @@ html:not(.dark) .bookwrap {
 }
 
 .tab.cur {
-  background: var(--sand);
-  color: var(--forest-950);
+  background: var(--bg-surface);
+  color: var(--fg-brand);
+  box-shadow: inset 0 -2px 0 var(--hilo-blue-500);
 }
 
 .tabbody {
-  border: 1px solid var(--hair);
-  padding: 26px;
-  background: var(--forest-900);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0 0 16px 16px;
+  box-shadow: var(--shadow-xs);
+  padding: 24px;
+  background: var(--bg-surface);
   font-size: 13.5px;
   color: var(--iv62);
   margin-bottom: 30px;
 }
 
 .tabbody h6 {
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   font-weight: 400;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  font-size: 13px;
-  color: var(--sand);
+  font-size: 11px;
+  color: var(--fg-subtle);
   margin-bottom: 12px;
 }
 
@@ -1595,9 +1644,11 @@ html:not(.dark) .bookwrap {
 }
 
 .selbox {
-  border: 1px solid var(--hair);
-  background: var(--forest-900);
-  padding: 14px 18px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-xs);
+  padding: 10px 14px;
 }
 
 .selbox.grow {
@@ -1608,10 +1659,11 @@ html:not(.dark) .bookwrap {
   display: block;
   font-family: var(--font-sans);
   font-size: 11px;
+  font-weight: 400;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--coral);
-  margin-bottom: 7px;
+  color: var(--fg-subtle);
+  margin-bottom: 4px;
 }
 
 .selbox select {
@@ -1619,9 +1671,10 @@ html:not(.dark) .bookwrap {
   width: 100%;
   background: transparent;
   border: none;
-  color: var(--ivory);
-  font-family: var(--font-display);
-  font-size: 16px;
+  color: var(--fg-default);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 400;
   letter-spacing: 0;
   outline: none;
   cursor: pointer;
@@ -1634,8 +1687,9 @@ html:not(.dark) .bookwrap {
 }
 
 .partyline {
-  font-family: var(--font-display);
-  font-size: 16px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 400;
   letter-spacing: 0;
 }
 
@@ -1647,19 +1701,22 @@ html:not(.dark) .bookwrap {
 }
 
 .cabtab {
-  border: 1px solid var(--hair);
-  padding: 12px 18px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 8px 12px;
   cursor: pointer;
-  background: transparent;
+  background: var(--bg-surface);
   color: inherit;
   text-align: left;
+  box-shadow: var(--shadow-xs);
 }
 
 .cabtab .t {
-  font-family: var(--font-display);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-family: var(--font-sans);
+  letter-spacing: 0;
+  text-transform: none;
   font-size: 13px;
+  font-weight: 500;
 }
 
 .cabtab .s {
@@ -1688,12 +1745,14 @@ html:not(.dark) .bookwrap {
 }
 
 .cabtab select {
-  background: var(--forest-950);
-  border: 1px solid var(--hair);
-  color: var(--iv62);
-  padding: 4px 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  color: var(--fg-default);
+  padding: 4px 8px;
   font-family: var(--font-sans);
-  font-size: 9px;
+  font-size: 13px;
+  line-height: 1.25;
   min-width: 2.75em;
   cursor: pointer;
 }
@@ -1710,9 +1769,10 @@ html:not(.dark) .bookwrap {
 .deck h5 {
   font-family: var(--font-sans);
   font-size: 11px;
+  font-weight: 400;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--sand);
+  color: var(--fg-subtle);
   margin-bottom: 16px;
   display: flex;
   justify-content: space-between;
@@ -1755,11 +1815,12 @@ html:not(.dark) .bookwrap {
 }
 
 .cabx {
-  border: 1px solid var(--hair);
-  padding: 16px 8px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 12px 8px;
   text-align: center;
   cursor: pointer;
-  background: transparent;
+  background: var(--bg-surface);
   color: inherit;
 }
 
@@ -1805,21 +1866,23 @@ html:not(.dark) .bookwrap {
 }
 
 .side {
-  border: 1px solid var(--hair);
-  padding: 32px;
-  background: var(--forest-950);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  box-shadow: var(--shadow-xs);
+  padding: 24px;
+  background: var(--bg-surface);
   position: sticky;
   top: 20px;
 }
 
 .side h4 {
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   font-weight: 400;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  font-size: 14px;
+  font-size: 11px;
   margin-bottom: 18px;
-  color: var(--sand);
+  color: var(--fg-subtle);
 }
 
 .line {
@@ -1903,27 +1966,32 @@ html:not(.dark) .bookwrap {
 .promo input {
   flex: 1;
   min-width: 0;
-  background: var(--forest-950);
-  border: 1px solid var(--hair);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
   border-right: none;
-  color: var(--ivory);
-  padding: 11px 12px;
+  border-radius: 8px 0 0 8px;
+  color: var(--fg-default);
+  padding: 8px 12px;
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 13px;
+  line-height: 1.25;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   outline: none;
 }
 
 .promo button {
-  background: transparent;
-  border: 1px solid var(--hair);
-  color: var(--ivory);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 0 8px 8px 0;
+  color: var(--fg-default);
   font-family: var(--font-sans);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 0 16px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  line-height: 1.25;
+  padding: 0 14px;
   cursor: pointer;
 }
 
@@ -1953,7 +2021,10 @@ html:not(.dark) .bookwrap {
 }
 
 .path {
-  border: 1px solid var(--hair);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  box-shadow: var(--shadow-xs);
+  background: var(--bg-surface);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -1961,8 +2032,8 @@ html:not(.dark) .bookwrap {
 }
 
 .path.on {
-  border-color: var(--coral);
-  background: color-mix(in srgb, var(--hilo-blue-500) 5%, transparent);
+  border-color: var(--hilo-blue-500);
+  background: color-mix(in srgb, var(--hilo-blue-500) 6%, var(--bg-surface));
 }
 
 .path .ph {
@@ -1977,8 +2048,9 @@ html:not(.dark) .bookwrap {
 .path h4 {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 17px;
+  font-size: 18px;
   letter-spacing: 0;
+  text-transform: none;
   margin-bottom: 8px;
 }
 
@@ -2002,19 +2074,22 @@ html:not(.dark) .bookwrap {
 
 .path .perk {
   display: inline-block;
-  background: var(--sand);
-  color: var(--forest-950);
+  background: color-mix(in srgb, var(--hilo-blue-500) 10%, var(--bg-surface));
+  color: var(--fg-brand);
+  border-radius: 9999px;
   font-family: var(--font-sans);
   font-size: 11px;
+  font-weight: 400;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  padding: 4px 8px;
+  padding: 2px 8px;
   margin-bottom: 12px;
   align-self: flex-start;
 }
 
 .payzero {
   border: 1px solid var(--ok);
+  border-radius: 8px;
   padding: 16px 18px;
   margin-top: 18px;
 }
@@ -2036,19 +2111,21 @@ html:not(.dark) .bookwrap {
 }
 
 .fsec {
-  border: 1px solid var(--hair);
-  background: var(--forest-900);
-  padding: 28px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  box-shadow: var(--shadow-xs);
+  background: var(--bg-surface);
+  padding: 24px;
   margin-bottom: 24px;
 }
 
 .fsec > h3 {
   font-family: var(--font-display);
   font-weight: 400;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  font-size: 14px;
-  color: var(--sand);
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 18px;
+  color: var(--fg-default);
   margin-bottom: 20px;
 }
 
@@ -2060,22 +2137,25 @@ html:not(.dark) .bookwrap {
   display: block;
   font-family: var(--font-sans);
   font-size: 11px;
+  font-weight: 400;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--iv62);
-  margin-bottom: 8px;
+  color: var(--fg-subtle);
+  margin-bottom: 6px;
 }
 
 .field input,
 .field select,
 .field textarea {
   width: 100%;
-  background: var(--forest-950);
-  border: 1px solid var(--hair);
-  color: var(--ivory);
-  padding: 13px 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  color: var(--fg-default);
+  padding: 10px 12px;
   font-family: var(--font-sans);
   font-size: 14px;
+  line-height: 1.4;
   outline: none;
 }
 
@@ -2110,18 +2190,23 @@ html:not(.dark) .bookwrap {
 
 .radio .opt {
   flex: 1;
-  border: 1px solid var(--hair);
-  padding: 13px;
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  padding: 8px 12px;
   cursor: pointer;
+  font-family: var(--font-sans);
   font-size: 13px;
+  font-weight: 500;
+  line-height: 1.25;
   text-align: center;
-  background: transparent;
-  color: inherit;
+  background: var(--bg-surface);
+  color: var(--fg-default);
 }
 
 .radio .opt.on {
-  border-color: var(--coral);
-  color: var(--coral);
+  border-color: var(--hilo-blue-500);
+  color: var(--fg-brand);
+  background: color-mix(in srgb, var(--hilo-blue-500) 10%, var(--bg-surface));
 }
 
 .chkrow {
@@ -2148,7 +2233,8 @@ html:not(.dark) .bookwrap {
 }
 
 .klabel {
-  color: var(--sand);
+  color: var(--fg-subtle);
+  font-weight: 400;
   display: block;
   margin-bottom: 12px;
 }
@@ -2320,14 +2406,15 @@ html:not(.dark) .bookwrap {
 }
 
 .scale-row button {
-  min-width: 36px;
-  height: 36px;
+  min-width: 32px;
+  height: 32px;
   padding: 0 8px;
-  border: 1px solid var(--hair);
-  background: transparent;
-  color: var(--ivory);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  color: var(--fg-default);
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 13px;
   cursor: pointer;
 }
 
@@ -2343,7 +2430,8 @@ html:not(.dark) .bookwrap {
 }
 
 .duebox {
-  border: 1px solid var(--hair);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
   padding: 16px 18px;
   margin-top: 16px;
 }

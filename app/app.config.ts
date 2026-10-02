@@ -4,7 +4,10 @@ export default defineAppConfig({
       variants: {
         size: {
           md: {
-            base: 'px-8 py-[15px] text-[13px] gap-2'
+            base: 'px-4 py-2 text-[13px] gap-2'
+          },
+          lg: {
+            base: 'px-4 py-2 text-[13px] gap-2'
           }
         }
       }
