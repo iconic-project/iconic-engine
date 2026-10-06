@@ -1,5 +1,11 @@
 <script setup lang="ts">
 import type { QuestionnaireView } from '../../types/api'
+
+type StayQuestionnaire = QuestionnaireView & {
+  check_in: string
+  check_out: string
+  property_name: string
+}
 import { engineErrorMessage, engineErrorStatus, fieldErrors } from '../../utils/engineError'
 import { formatIsoDate } from '../../utils/engineFlow'
 import {
@@ -26,7 +32,7 @@ useSeoMeta({
 
 const { data, error } = await useAsyncData(
   () => `engine-questionnaire-${token.value}`,
-  () => request(`/api/engine/questionnaire/${token.value}`) as Promise<QuestionnaireView>
+  () => request(`/api/engine/questionnaire/${token.value}`) as Promise<StayQuestionnaire>
 )
 
 const invalid = computed(() => {
@@ -167,7 +173,7 @@ async function saveGuest(guestId: number): Promise<void> {
         {{ t('questionnaire.title') }}
       </h1>
       <p class="sub">
-        {{ data.reference }} · {{ data.itinerary_name }} · {{ formatIsoDate(data.departure_date) }}
+        {{ data.reference }} · {{ data.property_name }} · {{ formatIsoDate(data.check_in) }} – {{ formatIsoDate(data.check_out) }}
       </p>
 
       <div
