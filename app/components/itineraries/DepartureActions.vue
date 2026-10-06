@@ -55,12 +55,5 @@ const selectLabel = computed(() => {
     >
       {{ t('itineraries.contact') }}
     </a>
-    <NuxtLink
-      v-if="action.type === 'charter'"
-      to="/charter"
-      class="btn o"
-    >
-      {{ t('itineraries.charter') }}
-    </NuxtLink>
   </div>
 </template>

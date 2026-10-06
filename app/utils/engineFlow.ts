@@ -53,7 +53,6 @@ export type RowAction
     | { type: 'waitlist' }
     | { type: 'waitlist_contact' }
     | { type: 'contact' }
-    | { type: 'charter' }
     | { type: 'none' }
 
 export type MonthPickPhase = 0 | 1
@@ -179,7 +178,7 @@ export function rowAction(dep: LabelledDeparture, min: number): RowAction {
     return { type: 'contact' }
   }
 
-  return { type: 'charter' }
+  return { type: 'contact' }
 }
 
 export function isSelectable(dep: LabelledDeparture, min: number): boolean {

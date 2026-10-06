@@ -162,8 +162,8 @@ describe('party fit and rowAction', () => {
     expect(rowAction(limited, 1)).toEqual({ type: 'waitlist_contact' })
   })
 
-  it('sends PRIVATE CHARTER ONLY to /charter', () => {
-    expect(rowAction(dep({ label: ENGINE_FEED_LABELS.charter }), 1)).toEqual({ type: 'charter' })
+  it('sends PRIVATE CHARTER ONLY to contact', () => {
+    expect(rowAction(dep({ label: ENGINE_FEED_LABELS.charter }), 1)).toEqual({ type: 'contact' })
     expect(isSelectable(dep({ label: ENGINE_FEED_LABELS.charter }), 1)).toBe(false)
   })
 

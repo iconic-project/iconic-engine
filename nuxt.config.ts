@@ -55,11 +55,6 @@ export default defineNuxtConfig({
         'cache-control': 'no-store, private'
       }
     },
-    '/charter-proposal/**': {
-      headers: {
-        'cache-control': 'no-store, private'
-      }
-    },
     '/unsubscribe/**': {
       headers: {
         'cache-control': 'no-store, private'
