@@ -347,7 +347,7 @@ async function submit(): Promise<void> {
           {{ t('stayShop.priceChanged') }}
           <AnkMoney
             v-if="expectedTotal !== null"
-            :usd="expectedTotal"
+            :amount="expectedTotal"
           />
         </p>
         <p v-if="formError">

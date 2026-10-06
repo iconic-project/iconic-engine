@@ -133,7 +133,7 @@ function search(value: StaySearch): void {
           </NuxtLink>
           <p v-if="type.from_price !== null">
             {{ t('stayShop.fromPrice') }}
-            <AnkMoney :usd="type.from_price" />
+            <AnkMoney :amount="type.from_price" />
           </p>
         </li>
       </ul>

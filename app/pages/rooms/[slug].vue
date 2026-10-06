@@ -114,7 +114,7 @@ onMounted(viewed)
     </ul>
     <p v-if="roomType.from_price !== null">
       {{ t('stayShop.fromPrice') }}
-      <AnkMoney :usd="roomType.from_price" />
+      <AnkMoney :amount="roomType.from_price" />
     </p>
   </article>
 </template>
