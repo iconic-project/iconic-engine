@@ -6,11 +6,9 @@ const { step } = useFlowStep()
 
 const crumbs = computed(() => [
   { step: 1 as FlowStep, label: t('crumbs.dates') },
-  { step: 2 as FlowStep, label: t('crumbs.itinerary') },
-  { step: 3 as FlowStep, label: t('crumbs.trip') },
-  { step: 4 as FlowStep, label: t('crumbs.cabins') },
-  { step: 5 as FlowStep, label: t('crumbs.details') },
-  { step: 6 as FlowStep, label: t('crumbs.confirmation') }
+  { step: 2 as FlowStep, label: t('crumbs.rooms') },
+  { step: 3 as FlowStep, label: t('crumbs.details') },
+  { step: 4 as FlowStep, label: t('crumbs.confirmation') }
 ])
 
 function crumbClass(crumbStep: FlowStep): string {

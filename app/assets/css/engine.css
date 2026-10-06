@@ -2477,3 +2477,94 @@ html:not(.dark) .bookwrap {
     animation: none;
 }
 }
+
+.stay-search,
+.summary,
+.room-card,
+.types li {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-xs);
+}
+
+.stay-search label,
+.details label,
+.qty {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 13px;
+}
+
+.stay-search input[type='number'],
+.qty input {
+  width: 4.5rem;
+}
+
+.summary {
+  gap: 8px;
+}
+
+.summary ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 13px;
+}
+
+.types,
+.gallery {
+  display: grid;
+  gap: 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.types {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.gallery img,
+.hero img {
+  width: 100%;
+  border-radius: 16px;
+}
+
+.hero img {
+  max-height: 420px;
+  object-fit: cover;
+}
+
+.list,
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.details {
+  max-width: 32rem;
+}
+
+.plans {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.plan {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.left,
+.reason {
+  font-size: 13px;
+}

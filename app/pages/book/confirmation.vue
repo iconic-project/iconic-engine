@@ -7,6 +7,7 @@ const route = useRoute()
 const { flow } = useBookingFlow()
 const checkout = useCheckout()
 const { data: feed } = useEngineFeed()
+const { session } = useStaySession()
 
 useHead({ title: t('pages.confirmation') })
 
@@ -15,12 +16,21 @@ const nowTick = ref(Date.now())
 const status = ref<CheckoutStatus | null>(null)
 const purchased = ref(false)
 
-if (import.meta.client && !flow.value.confirmation && !route.query.session_id && !flow.value.checkoutToken) {
+const stayArrived = Boolean(
+  flow.value.confirmation
+  || session.value.confirmation
+  || route.query.session_id
+  || flow.value.checkoutToken
+  || session.value.hold
+)
+
+if (import.meta.client && !stayArrived) {
   await navigateTo('/')
 }
 
 const path = computed(() =>
-  flow.value.confirmation?.path
+  session.value.confirmation?.path
+  ?? flow.value.confirmation?.path
   ?? status.value?.path
   ?? (route.query.session_id ? 'PAY_DEPOSIT' : flow.value.path)
 )
@@ -34,13 +44,15 @@ const screen = computed(() => confirmationScreen({
 }))
 
 const references = computed(() =>
-  flow.value.confirmation?.references
+  session.value.confirmation?.references
+  ?? flow.value.confirmation?.references
   ?? status.value?.bookings.map(booking => booking.reference).filter((value): value is string => Boolean(value))
   ?? []
 )
 
 const email = computed(() =>
-  flow.value.confirmation?.email
+  session.value.confirmation?.email
+  ?? flow.value.confirmation?.email
   ?? status.value?.email
   ?? flow.value.email
 )
@@ -72,7 +84,7 @@ function firePurchase(): void {
 }
 
 async function poll(): Promise<void> {
-  const token = flow.value.checkoutToken
+  const token = flow.value.checkoutToken ?? session.value.hold?.token
 
   if (!token) {
     return
@@ -153,6 +165,10 @@ const heading = computed(() => {
     <h1 class="disp">
       {{ heading.t }}
     </h1>
+    <StaySummary
+      v-if="session.quote"
+      :quote="session.quote"
+    />
     <div
       v-if="references.length"
       class="bigid"

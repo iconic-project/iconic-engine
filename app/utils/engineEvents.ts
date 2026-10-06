@@ -18,7 +18,9 @@ const NAMES: Array<EngineEventName> = [
   'abandon_cart',
   'charter_inquiry_submit',
   'view_departure',
-  'page_view'
+  'page_view',
+  'search_performed',
+  'room_type_viewed'
 ]
 
 /**
@@ -44,7 +46,9 @@ const REQUIRED: Record<EngineEventName, Array<keyof EngineEventParams>> = {
   abandon_cart: ['itinerary_code', 'departure_id', 'step', 'cabin_count'],
   charter_inquiry_submit: [],
   view_departure: ['itinerary_code', 'departure_id'],
-  page_view: ['page_path']
+  page_view: ['page_path'],
+  search_performed: ['check_in', 'check_out', 'adults', 'children', 'rooms'],
+  room_type_viewed: ['room_type']
 }
 
 const ALLOWED: Record<EngineEventName, Array<keyof EngineEventParams>> = {
@@ -64,7 +68,9 @@ const ALLOWED: Record<EngineEventName, Array<keyof EngineEventParams>> = {
   abandon_cart: ['itinerary_code', 'departure_id', 'step', 'cabin_count'],
   charter_inquiry_submit: ['itinerary_code', 'departure_id', 'value', 'currency'],
   view_departure: ['itinerary_code', 'departure_id'],
-  page_view: ['page_path']
+  page_view: ['page_path'],
+  search_performed: ['check_in', 'check_out', 'adults', 'children', 'rooms'],
+  room_type_viewed: ['room_type']
 }
 
 export type BuiltEngineEvent = {
@@ -139,6 +145,16 @@ function castKey(key: keyof EngineEventParams, value: unknown): string | number 
       return coupon(value)
     case 'page_path':
       return typeof value === 'string' ? redactPagePath(value) ?? undefined : undefined
+    case 'check_in':
+    case 'check_out':
+      return shortString(value, 10)
+    case 'room_type':
+      return shortString(value, 32)
+    case 'adults':
+    case 'rooms':
+      return positiveInt(value)
+    case 'children':
+      return nonNegativeInt(value)
     default:
       return undefined
   }
@@ -156,6 +172,14 @@ function shortString(value: unknown, max: number): string | undefined {
   }
 
   return trimmed
+}
+
+function nonNegativeInt(value: unknown): number | undefined {
+  if (typeof value !== 'number' || !Number.isInteger(value) || value < 0) {
+    return undefined
+  }
+
+  return value
 }
 
 function positiveInt(value: unknown): number | undefined {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { t } = useI18n()
-const { expeditionsOn } = useFlowStep()
+const { stayOn } = useFlowStep()
 </script>
 
 <template>
@@ -16,15 +16,9 @@ const { expeditionsOn } = useFlowStep()
     <nav class="topnav">
       <NuxtLink
         to="/"
-        :class="{ on: expeditionsOn }"
+        :class="{ on: stayOn }"
       >
-        {{ t('nav.expeditions') }}
-      </NuxtLink>
-      <NuxtLink
-        to="/charter"
-        :class="{ on: $route.path === '/charter' }"
-      >
-        {{ t('nav.charter') }}
+        {{ t('stayShop.nav') }}
       </NuxtLink>
       <AnkThemeToggle />
     </nav>

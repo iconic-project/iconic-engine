@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.131",
-    "@internationalized/date": "^3.12.4",
     "@iconify-json/simple-icons": "^1.2.95",
+    "@internationalized/date": "^3.12.4",
     "@nuxt/ui": "^4.11.1",
     "@nuxtjs/i18n": "10.6.0",
     "d3": "^7.9.0",
@@ -26,6 +26,7 @@
     "@nuxt/eslint": "^1.17.0",
     "@nuxt/test-utils": "^4.3.2",
     "@types/d3": "^7.4.3",
+    "@vue/test-utils": "^2.5.1",
     "eslint": "^10.10.0",
     "eslint-plugin-better-tailwindcss": "^4.7.0",
     "happy-dom": "^20.14.5",

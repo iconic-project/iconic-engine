@@ -55,7 +55,7 @@ export function useCheckout() {
       credentials: 'include',
       method: options.method,
       body: options.body
-    })
+    }) as Promise<T>
   }
 
   async function quote(): Promise<EngineQuote | null> {

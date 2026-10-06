@@ -202,7 +202,7 @@ function pay(): void {
           :key="booking.id"
           class="line"
         >
-          <span>{{ booking.reference }} · {{ booking.yacht }} · {{ formatIsoDate(booking.departure_date) }} · {{ booking.cabin_label }}</span>
+          <span>{{ booking.reference }} · {{ booking.property }} · {{ formatIsoDate(booking.departure_date) }} · {{ booking.cabin_label }}</span>
           <span>{{ booking.itinerary_name }}</span>
         </div>
         <div class="duebox">

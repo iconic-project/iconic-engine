@@ -1,4 +1,4 @@
-export type FlowStep = 1 | 2 | 3 | 4 | 5 | 6
+export type FlowStep = 1 | 2 | 3 | 4
 
 export function useFlowStep() {
   const route = useRoute()
@@ -10,37 +10,29 @@ export function useFlowStep() {
       return 1
     }
 
-    if (path === '/itineraries') {
+    if (path === '/book/rooms' || path.startsWith('/rooms/')) {
       return 2
     }
 
-    if (path.startsWith('/itineraries/')) {
+    if (path === '/book/details') {
       return 3
     }
 
-    if (path === '/book/cabins') {
-      return 4
-    }
-
-    if (path === '/book/details') {
-      return 5
-    }
-
     if (path === '/book/confirmation') {
-      return 6
+      return 4
     }
 
     return null
   })
 
-  const showHero = computed(() => step.value === 1)
+  const showHero = computed(() => false)
   const showCrumbs = computed(() => step.value !== null && step.value >= 2)
-  const expeditionsOn = computed(() => step.value !== null)
+  const stayOn = computed(() => step.value !== null)
 
   return {
     step,
     showHero,
     showCrumbs,
-    expeditionsOn
+    stayOn
   }
 }
