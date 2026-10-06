@@ -40,6 +40,9 @@ export default defineNuxtConfig({
     : {},
 
   routeRules: {
+    '/itineraries': { redirect: { to: '/rooms', statusCode: 301 } },
+    '/itineraries/**': { redirect: { to: '/rooms', statusCode: 301 } },
+    '/book/cabins': { redirect: { to: '/book/rooms', statusCode: 301 } },
     '/complete/**': {
       headers: {
         'cache-control': 'no-store, private'

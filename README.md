@@ -1,6 +1,6 @@
 # iconic-engine
 
-Public booking engine for Iconic. Nuxt 4 with **SSR** on port **3000**. Extends the `iconic-ui` layer and applies engine-only visual overrides from the booking-engine prototype.
+Public booking engine for the Iconic hotel. Nuxt 4 with **SSR** on port **3000**. Extends the `iconic-ui` layer. Guests pick a room and a stay.
 
 | | |
 |---|---|
@@ -36,7 +36,7 @@ pnpm dev
 
 Open `http://localhost:3000`.
 
-Placeholder routes (flow built in Sprint 8): `/`, `/itineraries`, `/itineraries/[slug]`, `/book/cabins`, `/book/details`, `/book/confirmation`, `/charter`.
+Routes: `/`, `/rooms/[slug]`, `/book/rooms`, `/book/details`, `/book/confirmation`. Old public paths `/itineraries` and `/itineraries/**` redirect to `/rooms` (301). `/book/cabins` redirects to `/book/rooms` (301).
 
 ## Deploy (Netlify)
 

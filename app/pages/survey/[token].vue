@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { SurveyInput, SurveyView } from '../../types/api'
 import { engineErrorMessage, engineErrorStatus, fieldErrors } from '../../utils/engineError'
-import { formatIsoDate } from '../../utils/engineFlow'
+import { formatIsoDate } from '../../utils/formatIsoDate'
 import { scaleValues } from '../../utils/scaleValues'
 
 const { t } = useI18n()
@@ -119,7 +119,7 @@ async function sendGuest(guestId: number): Promise<void> {
         {{ t('survey.title') }}
       </h1>
       <p class="sub">
-        {{ data.reference }} · {{ data.itinerary_name }} · {{ formatIsoDate(data.departure_date) }}
+        {{ data.reference }} · {{ data.property_name }} · {{ formatIsoDate(data.check_in) }}
       </p>
 
       <div

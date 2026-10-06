@@ -2,7 +2,6 @@
 export const COMPLETE_STORED = '/complete/[token]'
 export const QUESTIONNAIRE_STORED = '/questionnaire/[token]'
 export const SURVEY_STORED = '/survey/[token]'
-export const CHARTER_PROPOSAL_STORED = '/charter-proposal/[token]'
 export const UNSUBSCRIBE_STORED = '/unsubscribe/[token]'
 
 export function redactPagePath(path: string): string | null {
@@ -29,10 +28,6 @@ export function redactPagePath(path: string): string | null {
 
   if (withoutHash.startsWith('/survey/')) {
     return SURVEY_STORED
-  }
-
-  if (withoutHash.startsWith('/charter-proposal/')) {
-    return CHARTER_PROPOSAL_STORED
   }
 
   if (withoutHash.startsWith('/unsubscribe/')) {

@@ -4,9 +4,7 @@ import { confirmationScreen, POLL_INTERVAL_MS } from '../../utils/confirmationPo
 
 const { t } = useI18n()
 const route = useRoute()
-const { flow } = useBookingFlow()
-const checkout = useCheckout()
-const { data: feed } = useEngineFeed()
+const { request } = useApi()
 const { session } = useStaySession()
 
 useHead({ title: t('pages.confirmation') })
@@ -17,10 +15,8 @@ const status = ref<CheckoutStatus | null>(null)
 const purchased = ref(false)
 
 const stayArrived = Boolean(
-  flow.value.confirmation
-  || session.value.confirmation
+  session.value.confirmation
   || route.query.session_id
-  || flow.value.checkoutToken
   || session.value.hold
 )
 
@@ -30,9 +26,8 @@ if (import.meta.client && !stayArrived) {
 
 const path = computed(() =>
   session.value.confirmation?.path
-  ?? flow.value.confirmation?.path
   ?? status.value?.path
-  ?? (route.query.session_id ? 'PAY_DEPOSIT' : flow.value.path)
+  ?? (route.query.session_id ? 'PAY_DEPOSIT' : 'PAY_LATER')
 )
 
 const screen = computed(() => confirmationScreen({
@@ -45,30 +40,21 @@ const screen = computed(() => confirmationScreen({
 
 const references = computed(() =>
   session.value.confirmation?.references
-  ?? flow.value.confirmation?.references
   ?? status.value?.bookings.map(booking => booking.reference).filter((value): value is string => Boolean(value))
   ?? []
 )
 
 const email = computed(() =>
   session.value.confirmation?.email
-  ?? flow.value.confirmation?.email
   ?? status.value?.email
-  ?? flow.value.email
+  ?? ''
 )
 
-const sla = computed(() => feed.value?.settings.policies.response_sla_hours ?? 24)
-const steps = computed(() => {
-  const raw = feed.value?.settings.copy.confirmation_steps ?? []
-
-  return raw.map((step, index) => {
-    if (index === 0) {
-      return step.replace(/\d+\s+hours?/, `${sla.value} hours`)
-    }
-
-    return step
-  })
-})
+const steps = computed(() => [
+  t('confirm.paid1'),
+  t('confirm.paid2'),
+  t('confirm.paid3')
+])
 
 function firePurchase(): void {
   if (purchased.value) {
@@ -78,19 +64,19 @@ function firePurchase(): void {
   purchased.value = true
   track('purchase', {
     transaction_id: references.value.join(','),
-    value: flow.value.serverQuote?.total ?? 0,
+    value: session.value.quote?.total ?? 0,
     currency: 'USD'
   })
 }
 
 async function poll(): Promise<void> {
-  const token = flow.value.checkoutToken ?? session.value.hold?.token
+  const token = session.value.hold?.token
 
   if (!token) {
     return
   }
 
-  status.value = await checkout.status(token)
+  status.value = await request(`/api/engine/checkout/${token}/status`) as CheckoutStatus
   nowTick.value = Date.now()
 
   if (confirmationScreen({
@@ -109,7 +95,7 @@ onMounted(async () => {
     return
   }
 
-  if (!flow.value.checkoutToken && !route.query.session_id) {
+  if (!session.value.hold?.token && !route.query.session_id) {
     await navigateTo('/')
 
     return

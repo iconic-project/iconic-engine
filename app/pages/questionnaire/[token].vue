@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import type { QuestionnaireView } from '../../types/api'
+import { engineErrorMessage, engineErrorStatus, fieldErrors } from '../../utils/engineError'
+import { formatIsoDate } from '../../utils/formatIsoDate'
+import {
+  questionnaireControlValue,
+  questionnaireShowsReplace,
+  questionnaireSubmitValue
+} from '../../utils/questionnaireFields'
 
 type StayQuestionnaire = QuestionnaireView & {
   check_in: string
   check_out: string
   property_name: string
 }
-import { engineErrorMessage, engineErrorStatus, fieldErrors } from '../../utils/engineError'
-import { formatIsoDate } from '../../utils/engineFlow'
-import {
-  questionnaireControlValue,
-  questionnaireShowsReplace,
-  questionnaireSubmitValue
-} from '../../utils/questionnaireFields'
 
 const { t } = useI18n()
 const { request } = useApi()
@@ -181,7 +181,7 @@ async function saveGuest(guestId: number): Promise<void> {
         :key="guest.id"
         class="fsec"
       >
-        <h3>{{ t('questionnaire.guest', { name: guest.first_name, cabin: guest.cabin }) }}</h3>
+        <h3>{{ t('questionnaire.guest', { name: guest.first_name, room: guest.room }) }}</h3>
         <div
           v-for="question in data.questions"
           :key="question.key"

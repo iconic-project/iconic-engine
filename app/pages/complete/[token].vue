@@ -2,7 +2,7 @@
 import type { CompleteReservation } from '../../types/api'
 import { completePayReady, declarationControl } from '../../utils/completeState'
 import { engineErrorMessage, engineErrorStatus, fieldErrors } from '../../utils/engineError'
-import { formatIsoDate } from '../../utils/engineFlow'
+import { formatIsoDate } from '../../utils/formatIsoDate'
 import { submitSessionId } from '../../utils/engineSession'
 
 const { t } = useI18n()
@@ -202,8 +202,7 @@ function pay(): void {
           :key="booking.id"
           class="line"
         >
-          <span>{{ booking.reference }} · {{ booking.property }} · {{ formatIsoDate(booking.departure_date) }} · {{ booking.cabin_label }}</span>
-          <span>{{ booking.itinerary_name }}</span>
+          <span>{{ booking.reference }} · {{ booking.property }} · {{ formatIsoDate(booking.check_in) }} – {{ formatIsoDate(booking.check_out) }} · {{ booking.room_label }}</span>
         </div>
         <div class="duebox">
           <div class="r">
