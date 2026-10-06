@@ -223,7 +223,7 @@ body {
 
 .engine-placeholder {
   border: 1px solid var(--border-subtle);
-  border-radius: 16px;
+  border-radius: var(--ui-radius);
   box-shadow: var(--shadow-xs);
   background: var(--bg-surface);
   margin-bottom: 24px;
@@ -623,7 +623,7 @@ html:not(.dark) .bookwrap {
 
 .itin {
   border: 1px solid var(--border-subtle);
-  border-radius: 16px;
+  border-radius: var(--ui-radius);
   box-shadow: var(--shadow-xs);
   background: var(--bg-surface);
   overflow: hidden;
@@ -1006,7 +1006,7 @@ html:not(.dark) .bookwrap {
   height: 300px;
   position: relative;
   border: 1px solid var(--border-subtle);
-  border-radius: 16px;
+  border-radius: var(--ui-radius);
   box-shadow: var(--shadow-xs);
   margin-bottom: 22px;
   overflow: hidden;
@@ -1029,7 +1029,7 @@ html:not(.dark) .bookwrap {
   gap: 1px;
   background: var(--border-subtle);
   border: 1px solid var(--border-subtle);
-  border-radius: 16px;
+  border-radius: var(--ui-radius);
   box-shadow: var(--shadow-xs);
   overflow: hidden;
   margin-bottom: 24px;
@@ -1069,7 +1069,7 @@ html:not(.dark) .bookwrap {
 
 .railbox {
   border: 1px solid var(--border-subtle);
-  border-radius: 16px;
+  border-radius: var(--ui-radius);
   box-shadow: var(--shadow-xs);
   background: var(--bg-surface);
   padding: 24px;
@@ -1136,7 +1136,7 @@ html:not(.dark) .bookwrap {
 
 .railnote {
   border: 1px solid var(--border-subtle);
-  border-radius: 16px;
+  border-radius: var(--ui-radius);
   box-shadow: var(--shadow-xs);
   background: var(--bg-surface);
   padding: 16px 18px;
@@ -1161,7 +1161,7 @@ html:not(.dark) .bookwrap {
 
 .dtable {
   border: 1px solid var(--border-subtle);
-  border-radius: 16px;
+  border-radius: var(--ui-radius);
   box-shadow: var(--shadow-xs);
   overflow: hidden;
   background: var(--bg-surface);
@@ -1229,7 +1229,7 @@ html:not(.dark) .bookwrap {
   gap: 0;
   border: 1px solid var(--border-subtle);
   border-bottom: none;
-  border-radius: 16px 16px 0 0;
+  border-radius: var(--ui-radius) var(--ui-radius) 0 0;
   overflow: hidden;
   background: var(--bg-surface);
   flex-wrap: wrap;
@@ -1256,7 +1256,7 @@ html:not(.dark) .bookwrap {
 
 .tabbody {
   border: 1px solid var(--border-subtle);
-  border-radius: 0 0 16px 16px;
+  border-radius: 0 0 var(--ui-radius) var(--ui-radius);
   box-shadow: var(--shadow-xs);
   padding: 24px;
   background: var(--bg-surface);
@@ -1342,7 +1342,7 @@ html:not(.dark) .bookwrap {
   min-height: 520px;
   width: 100%;
   border: 1px solid var(--hair);
-  border-radius: 16px;
+  border-radius: var(--ui-radius);
   overflow: hidden;
   background: var(--bone);
   color: var(--ink);
@@ -1759,7 +1759,7 @@ html:not(.dark) .bookwrap {
 
 .deck {
   border: 1px solid var(--hair);
-  border-radius: 16px;
+  border-radius: var(--ui-radius);
   box-shadow: var(--shadow-xs);
   padding: 28px;
   background: var(--forest-900);
@@ -1787,7 +1787,7 @@ html:not(.dark) .bookwrap {
   position: relative;
   padding: 18px 60px 18px 18px;
   border: 1px solid var(--hair);
-  border-radius: 16px;
+  border-radius: var(--ui-radius);
   background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--fg-default) 3%, transparent) 100%);
 }
 
@@ -1867,7 +1867,7 @@ html:not(.dark) .bookwrap {
 
 .side {
   border: 1px solid var(--border-subtle);
-  border-radius: 16px;
+  border-radius: var(--ui-radius);
   box-shadow: var(--shadow-xs);
   padding: 24px;
   background: var(--bg-surface);
@@ -2022,7 +2022,7 @@ html:not(.dark) .bookwrap {
 
 .path {
   border: 1px solid var(--border-subtle);
-  border-radius: 16px;
+  border-radius: var(--ui-radius);
   box-shadow: var(--shadow-xs);
   background: var(--bg-surface);
   padding: 20px;
@@ -2112,7 +2112,7 @@ html:not(.dark) .bookwrap {
 
 .fsec {
   border: 1px solid var(--border-subtle);
-  border-radius: 16px;
+  border-radius: var(--ui-radius);
   box-shadow: var(--shadow-xs);
   background: var(--bg-surface);
   padding: 24px;
@@ -2487,7 +2487,7 @@ html:not(.dark) .bookwrap {
   gap: 12px;
   padding: 16px;
   border: 1px solid var(--border-subtle);
-  border-radius: 16px;
+  border-radius: var(--ui-radius);
   background: var(--bg-surface);
   box-shadow: var(--shadow-xs);
 }
@@ -2531,7 +2531,7 @@ html:not(.dark) .bookwrap {
 .gallery img,
 .hero img {
   width: 100%;
-  border-radius: 16px;
+  border-radius: var(--ui-radius);
 }
 
 .hero img {
