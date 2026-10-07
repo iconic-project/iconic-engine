@@ -287,14 +287,19 @@ function search(value: StaySearch): void {
       </div>
     </section>
 
-    <button
-      v-if="feed && !reserveOpen"
-      type="button"
-      class="casa-reserve-btn"
-      @click="openReserve"
+    <Teleport
+      defer
+      to="#casa-reserve-slot"
     >
-      {{ t('casa.reserve') }}
-    </button>
+      <button
+        v-if="feed && !reserveOpen"
+        type="button"
+        class="casa-reserve-btn"
+        @click="openReserve"
+      >
+        {{ t('casa.reserve') }}
+      </button>
+    </Teleport>
 
     <StayReserveWidget
       v-if="feed"

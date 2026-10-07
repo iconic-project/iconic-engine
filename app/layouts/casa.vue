@@ -13,7 +13,13 @@ useHead({
 
 <template>
   <div class="casa">
+    <div class="casa-dock">
+      <div
+        id="casa-reserve-slot"
+        class="casa-reserve-slot"
+      />
+      <ShellConsentBanner />
+    </div>
     <slot />
-    <ShellConsentBanner />
   </div>
 </template>
