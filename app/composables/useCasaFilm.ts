@@ -35,6 +35,128 @@ function defined<T>(value: T | null | undefined): T {
   return value
 }
 
+const frameBlobs: Array<Blob | undefined> = Array.from({ length: FRAME_COUNT })
+const frameLoads = new Map<number, Promise<void>>()
+let contiguousLoaded = 0
+let filmMounted = false
+let lastFilmScrollAt = 0
+let backgroundPreload: Promise<void> | null = null
+
+function advanceContiguous(): void {
+  while (frameBlobs[contiguousLoaded]) {
+    contiguousLoaded += 1
+  }
+}
+
+function initialChunkReady(): boolean {
+  for (let index = 0; index < INITIAL_CHUNK; index += 1) {
+    if (!frameBlobs[index]) {
+      return false
+    }
+  }
+
+  return true
+}
+
+function loadFrame(index: number): Promise<void> {
+  if (frameBlobs[index]) {
+    return Promise.resolve()
+  }
+
+  const pending = frameLoads.get(index)
+
+  if (pending) {
+    return pending
+  }
+
+  const job = fetch(framePath(index))
+    .then(async (response) => {
+      if (response.ok) {
+        frameBlobs[index] = await response.blob()
+      }
+    })
+    .catch(() => {
+      // A missing frame should not stall the rest.
+    })
+    .finally(() => {
+      frameLoads.delete(index)
+      advanceContiguous()
+    })
+
+  frameLoads.set(index, job)
+
+  return job
+}
+
+function filmIsScrolling(): boolean {
+  return filmMounted && performance.now() - lastFilmScrollAt < SCROLL_QUIET_MS
+}
+
+async function preloadRange(from: number, to: number, options: {
+  concurrency: number
+  onProgress?: (progress: number) => void
+  yieldToScroll?: boolean
+  shouldContinue?: () => boolean
+}): Promise<void> {
+  const total = to - from
+  let settled = 0
+
+  for (let index = from; index < to; index += 1) {
+    if (frameBlobs[index]) {
+      settled += 1
+    }
+  }
+
+  if (total > 0) {
+    options.onProgress?.(settled / total)
+  }
+
+  let next = from
+
+  async function worker(): Promise<void> {
+    while ((options.shouldContinue?.() ?? true) && next < to) {
+      if (options.yieldToScroll) {
+        while ((options.shouldContinue?.() ?? true) && filmIsScrolling()) {
+          await wait(SCROLL_QUIET_MS)
+        }
+      }
+
+      if (!(options.shouldContinue?.() ?? true) || next >= to) {
+        return
+      }
+
+      const index = next
+      next += 1
+
+      if (frameBlobs[index]) {
+        continue
+      }
+
+      await loadFrame(index)
+
+      if (!(options.shouldContinue?.() ?? true)) {
+        return
+      }
+
+      settled += 1
+      options.onProgress?.(settled / total)
+    }
+  }
+
+  await Promise.all(Array.from({ length: options.concurrency }, () => worker()))
+}
+
+function ensureBackgroundPreload(): void {
+  if (backgroundPreload) {
+    return
+  }
+
+  backgroundPreload = preloadRange(INITIAL_CHUNK, FRAME_COUNT, {
+    concurrency: BACKGROUND_CONCURRENCY,
+    yieldToScroll: true
+  })
+}
+
 export function useCasaFilm(refs: {
   hero: Ref<HTMLElement | null>
   canvas: Ref<HTMLCanvasElement | null>
@@ -53,10 +175,13 @@ export function useCasaFilm(refs: {
 
   onBeforeUnmount(() => {
     alive = false
+    filmMounted = false
     dispose()
   })
 
   onMounted(() => {
+    filmMounted = true
+
     const hero = defined(refs.hero.value)
     const canvas = defined(refs.canvas.value)
     const loader = defined(refs.loader.value)
@@ -71,19 +196,16 @@ export function useCasaFilm(refs: {
     const context = defined(canvas.getContext('2d', { alpha: false }))
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const blobs: Array<Blob | undefined> = Array.from({ length: FRAME_COUNT })
     const bitmaps = new Map<number, ImageBitmap>()
     const decoding = new Set<number>()
     const stops: Array<() => void> = []
     const styleCache = new WeakMap<HTMLElement, Record<string, string>>()
 
-    let contiguous = 0
     let currentFrame = 0
     let renderedFrame = -1
     let direction = 1
     let windowStart = 0
     let windowEnd = 0
-    let lastScrollAt = 0
     let heroVisible = true
     let running = false
     let viewportW = 0
@@ -135,7 +257,7 @@ export function useCasaFilm(refs: {
     }
 
     function drawIndex(): number {
-      return clamp(Math.round(currentFrame), 0, Math.max(0, contiguous - 1))
+      return clamp(Math.round(currentFrame), 0, Math.max(0, contiguousLoaded - 1))
     }
 
     function nearestDecoded(index: number): number {
@@ -187,7 +309,7 @@ export function useCasaFilm(refs: {
     }
 
     function decodeFrame(index: number): void {
-      const blob = blobs[index]
+      const blob = frameBlobs[index]
 
       if (!blob) {
         return
@@ -240,7 +362,7 @@ export function useCasaFilm(refs: {
             continue
           }
 
-          if (!blobs[index] || bitmaps.has(index) || decoding.has(index)) {
+          if (!frameBlobs[index] || bitmaps.has(index) || decoding.has(index)) {
             continue
           }
 
@@ -254,7 +376,7 @@ export function useCasaFilm(refs: {
       const jobs: Array<Promise<void>> = []
 
       for (let index = windowStart; index <= windowEnd; index += 1) {
-        const blob = blobs[index]
+        const blob = frameBlobs[index]
 
         if (!blob || bitmaps.has(index) || decoding.has(index)) {
           continue
@@ -352,54 +474,6 @@ export function useCasaFilm(refs: {
       raf = requestAnimationFrame(tick)
     }
 
-    async function loadFrame(index: number): Promise<void> {
-      try {
-        const response = await fetch(framePath(index))
-
-        if (response.ok) {
-          blobs[index] = await response.blob()
-        }
-      } catch {
-        // A missing frame should not stall the rest.
-      }
-
-      while (blobs[contiguous]) {
-        contiguous += 1
-      }
-    }
-
-    async function preloadRange(from: number, to: number, options: {
-      concurrency: number
-      onProgress?: (progress: number) => void
-      yieldToScroll?: boolean
-    }): Promise<void> {
-      let loaded = 0
-      let next = from
-
-      async function worker(): Promise<void> {
-        while (alive && next < to) {
-          if (options.yieldToScroll) {
-            while (alive && performance.now() - lastScrollAt < SCROLL_QUIET_MS) {
-              await wait(SCROLL_QUIET_MS)
-            }
-          }
-
-          const index = next
-          next += 1
-          await loadFrame(index)
-
-          if (!alive) {
-            return
-          }
-
-          loaded += 1
-          options.onProgress?.(loaded / (to - from))
-        }
-      }
-
-      await Promise.all(Array.from({ length: options.concurrency }, () => worker()))
-    }
-
     function setupGallery(): void {
       if (!gallery || !galleryTrack) {
         return
@@ -470,6 +544,10 @@ export function useCasaFilm(refs: {
         window.removeEventListener('orientationchange', onResize)
       })
 
+      if (initialChunkReady()) {
+        loader.classList.add('casa-loader--hidden')
+      }
+
       await loadFrame(0)
 
       if (!alive) {
@@ -491,20 +569,23 @@ export function useCasaFilm(refs: {
         return
       }
 
-      document.body.style.overflow = 'hidden'
+      if (!initialChunkReady()) {
+        document.body.style.overflow = 'hidden'
 
-      await preloadRange(1, INITIAL_CHUNK, {
-        concurrency: INITIAL_CONCURRENCY,
-        onProgress: (progress) => {
-          const pct = Math.round(progress * 100)
-          loaderFill.style.width = `${pct}%`
-          loaderPercent.textContent = `${pct}%`
+        await preloadRange(1, INITIAL_CHUNK, {
+          concurrency: INITIAL_CONCURRENCY,
+          shouldContinue: () => alive,
+          onProgress: (progress) => {
+            const pct = Math.round(progress * 100)
+            loaderFill.style.width = `${pct}%`
+            loaderPercent.textContent = `${pct}%`
+          }
+        })
+
+        if (!alive) {
+          document.body.style.overflow = ''
+          return
         }
-      })
-
-      if (!alive) {
-        document.body.style.overflow = ''
-        return
       }
 
       currentFrame = rawProgress() * (FRAME_COUNT - 1)
@@ -520,7 +601,7 @@ export function useCasaFilm(refs: {
       loader.classList.add('casa-loader--hidden')
 
       const onScroll = (): void => {
-        lastScrollAt = performance.now()
+        lastFilmScrollAt = performance.now()
       }
 
       window.addEventListener('scroll', onScroll, { passive: true })
@@ -539,10 +620,7 @@ export function useCasaFilm(refs: {
       }
 
       startLoop()
-      void preloadRange(INITIAL_CHUNK, FRAME_COUNT, {
-        concurrency: BACKGROUND_CONCURRENCY,
-        yieldToScroll: true
-      })
+      ensureBackgroundPreload()
     }
 
     setupGallery()

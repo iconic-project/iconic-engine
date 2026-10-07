@@ -43,6 +43,11 @@ export default defineNuxtConfig({
     '/itineraries': { redirect: { to: '/rooms', statusCode: 301 } },
     '/itineraries/**': { redirect: { to: '/rooms', statusCode: 301 } },
     '/book/cabins': { redirect: { to: '/book/rooms', statusCode: 301 } },
+    '/casa/frames/**': {
+      headers: {
+        'cache-control': 'public, max-age=31536000, immutable'
+      }
+    },
     '/complete/**': {
       headers: {
         'cache-control': 'no-store, private'
