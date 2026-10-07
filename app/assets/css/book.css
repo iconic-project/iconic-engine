@@ -1,11 +1,13 @@
 /* Booking steps, matched to the sage search and room sheets. */
 
 .book {
-  --book-sage: #5f7d68;
-  --book-sage-deep: #4e6a58;
-  --book-paper: #f4f5f3;
-  --book-ink: #2c2c2c;
-  --book-line: #e4e6e2;
+  --book-black: #000000;
+  --book-gold: #ac9b6a;
+  --book-sage: var(--book-black);
+  --book-sage-deep: #0c0c0b;
+  --book-paper: #f8f7f4;
+  --book-ink: #313131;
+  --book-line: #c8c4bc;
   min-height: 100vh;
   background: var(--book-paper);
   color: var(--book-ink);
@@ -72,7 +74,14 @@
 }
 
 .book-search {
-  --ui-primary: #5f7d68;
+  --book-black: #000000;
+  --book-gold: #ac9b6a;
+  --book-sage: var(--book-black);
+  --book-sage-deep: #0c0c0b;
+  --book-ink: #313131;
+  --book-muted: #8a847c;
+  --book-line: #c8c4bc;
+  --ui-primary: var(--book-black);
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -137,10 +146,10 @@
   place-items: center;
   width: 36px;
   height: 36px;
-  border: 1px solid var(--book-sage);
-  border-radius: 999px;
-  background: #fff;
-  color: var(--book-sage);
+  border: 0;
+  border-radius: 0;
+  background: var(--book-gold);
+  color: #fff;
   font-size: 20px;
   line-height: 1;
   cursor: pointer;
@@ -191,12 +200,12 @@
 .book-search-btn,
 .book-proceed {
   border: 0;
-  border-radius: 4px;
-  background: var(--book-sage);
+  border-radius: 0;
+  background: var(--book-black);
   color: #fff;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   cursor: pointer;
 }
@@ -521,8 +530,8 @@
 .casa-reserve .book-search {
   margin-top: 0;
   padding: 22px 22px 26px;
-  border: 1px solid #e6e1d8;
-  border-radius: 16px;
-  background: #f7f6f3;
+  border: 1px solid #c8c4bc;
+  border-radius: 0;
+  background: #f8f7f4;
   box-shadow: none;
 }

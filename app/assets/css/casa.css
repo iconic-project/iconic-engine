@@ -245,6 +245,10 @@ body:has(.casa) {
   text-align: center;
 }
 
+.casa-intro {
+  padding-top: 4vh;
+}
+
 .casa-intro-inner,
 .casa-reserve-inner {
   max-width: 760px;
@@ -324,7 +328,7 @@ body:has(.casa) {
 }
 
 .casa-gallery {
-  padding: 15vh 5vw;
+  padding: 15vh 5vw 3vh;
   background: var(--casa-cream);
 }
 
