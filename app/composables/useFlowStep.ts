@@ -3,8 +3,13 @@ export type FlowStep = 1 | 2 | 3 | 4 | 5
 export function useFlowStep() {
   const route = useRoute()
   const { session } = useStaySession()
+  const reserveStep = inject<ComputedRef<FlowStep> | null>('reserve-flow-step', null)
 
   const step = computed<FlowStep | null>(() => {
+    if (reserveStep) {
+      return reserveStep.value
+    }
+
     const path = route.path
 
     if (path === '/') {

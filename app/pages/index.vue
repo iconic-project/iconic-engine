@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { PropertyFeed } from '../types/stay'
 import { mediaUrl } from '../utils/mediaUrl'
-import { stayQuery, type StaySearch } from '../utils/stayQuery'
+import type { StaySearch } from '../utils/stayQuery'
 
 definePageMeta({ layout: 'casa' })
 
@@ -96,6 +96,12 @@ useHead({
     : []
 })
 
+const reserveOpen = ref(false)
+
+function openReserve(): void {
+  reserveOpen.value = true
+}
+
 function search(value: StaySearch): void {
   const params = {
     check_in: value.checkIn,
@@ -105,7 +111,6 @@ function search(value: StaySearch): void {
     rooms: value.rooms
   }
   track('search_performed', params, params)
-  void navigateTo({ path: '/book/rooms', query: stayQuery(value) })
 }
 </script>
 
@@ -249,10 +254,13 @@ function search(value: StaySearch): void {
         <p class="casa-intro-body">
           {{ t('casa.historyLead') }}<strong>{{ t('casa.relais') }}</strong>{{ t('casa.historyMid') }}<strong>{{ t('casa.virtuoso') }}</strong>{{ t('casa.historyMid2') }}<strong>{{ t('casa.michelin') }}</strong>{{ t('casa.historyEnd') }}
         </p>
-        <a
+        <button
+          type="button"
           class="casa-cta"
-          href="#casa-reserve"
-        >{{ t('casa.book') }}</a>
+          @click="openReserve"
+        >
+          {{ t('casa.reserve') }}
+        </button>
       </div>
     </section>
 
@@ -279,23 +287,25 @@ function search(value: StaySearch): void {
       </div>
     </section>
 
-    <section
-      id="casa-reserve"
-      class="casa-reserve"
+    <button
+      v-if="feed && !reserveOpen"
+      type="button"
+      class="casa-reserve-btn"
+      @click="openReserve"
     >
-      <div class="casa-reserve-inner">
-        <h2>{{ t('casa.book') }}</h2>
-        <StaySearchBar
-          v-if="feed"
-          :property-name="property?.name"
-          :min-nights="feed.settings.stay.min_nights"
-          :max-nights="feed.settings.stay.max_nights"
-          :max-rooms="feed.settings.stay.max_rooms_per_booking"
-          :child-min-age="feed.settings.guests.child_min_age"
-          :child-max-age="feed.settings.guests.child_max_age"
-          @search="search"
-        />
-      </div>
-    </section>
+      {{ t('casa.reserve') }}
+    </button>
+
+    <StayReserveWidget
+      v-if="feed"
+      v-model:open="reserveOpen"
+      :property-name="property?.name"
+      :min-nights="feed.settings.stay.min_nights"
+      :max-nights="feed.settings.stay.max_nights"
+      :max-rooms="feed.settings.stay.max_rooms_per_booking"
+      :child-min-age="feed.settings.guests.child_min_age"
+      :child-max-age="feed.settings.guests.child_max_age"
+      @search="search"
+    />
   </div>
 </template>
