@@ -434,55 +434,192 @@
 .book-card {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 20px;
+  gap: 20px;
+  width: min(100%, 40rem);
+  margin-inline: auto;
+  padding: 28px 24px 24px;
+  border: 1px solid var(--book-line);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: var(--shadow-xs);
+}
+
+.book-card h1 {
+  margin: 0;
+}
+
+.book .summary {
+  gap: 8px;
+  padding: 16px;
   border: 1px solid var(--book-line);
   border-radius: 12px;
-  background: #fff;
+  background: var(--book-paper);
+  box-shadow: none;
 }
 
-.book-card label,
-.book-pay label {
+.book-receipt-dates,
+.book-receipt-nights,
+.book-receipt-kicker,
+.book-receipt-totals p {
+  margin: 0;
+}
+
+.book-receipt-dates {
+  font-size: 15px;
+}
+
+.book-receipt-nights,
+.book-receipt-kicker {
+  color: #5c5c5c;
+  font-size: 13px;
+}
+
+.book-receipt-kicker {
+  margin-top: 4px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.book-receipt-room {
+  border-top: 1px solid var(--book-line);
+  padding-top: 4px;
+}
+
+.book-receipt-toggle {
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
   font-size: 14px;
   text-align: left;
+  cursor: pointer;
 }
 
-.book-card input[type='text'],
-.book-card input[type='email'],
-.book-card input[type='tel'],
-.book-card input:not([type]) {
-  width: 100%;
-  padding: 10px 12px;
+.book-receipt-end {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.book-receipt-chevron {
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-1px) rotate(45deg);
+  transition: transform 150ms var(--ease);
+}
+
+.book-receipt-chevron[data-open='true'] {
+  transform: translateY(2px) rotate(225deg);
+}
+
+.book .summary .book-receipt-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0 0 8px;
+  list-style: none;
+  color: #5c5c5c;
+  font-size: 13px;
+}
+
+.book-receipt-lines li,
+.book-receipt-totals p {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.book-receipt-totals {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 10px;
+  border-top: 1px solid var(--book-line);
+  font-size: 14px;
+}
+
+.book-receipt-due {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.book-hold {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 16px;
+  padding: 14px 16px;
   border: 1px solid var(--book-line);
-  border-radius: 8px;
-  font: inherit;
+  border-radius: 12px;
+  background: var(--book-paper);
 }
 
-.book-pay {
+.book-hold-label,
+.book-hold-time {
+  margin: 0;
+}
+
+.book-hold-label {
+  color: #6b6b6b;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.book-hold-time {
+  font-size: 18px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.book-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 12px;
+}
+
+.book-span,
+.book-declarations {
+  grid-column: 1 / -1;
+}
+
+.book-declarations {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.book-pay-opt {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
-  padding: 14px;
-  border: 1px solid #d9d9d9;
-  border-radius: 8px;
-  background: #fff;
+.book .details {
+  max-width: none;
+  margin: 0;
 }
 
-.book-card .book-check {
-  flex-direction: row;
-  align-items: center;
-  gap: 8px;
+@media (max-width: 640px) {
+  .book-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .book-hold {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book-receipt-chevron {
+    transition: none;
+  }
 }
 
 .book-error {
@@ -491,26 +628,82 @@
 }
 
 .book-confirm {
+  gap: 22px;
+}
+
+.book-kicker {
+  margin: 0 0 8px;
+  color: #6b6b6b;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.book-ref .book-kicker {
+  margin-bottom: 4px;
+}
+
+.book-ref {
+  padding: 14px 16px;
+  border: 1px solid var(--book-line);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.book-ref-id {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.book-confirm-lead {
+  margin: 0;
+  max-width: 62ch;
+  color: #5c5c5c;
+  font-size: 15px;
+}
+
+.book-confirm-lead a {
+  color: inherit;
+}
+
+.book-steps {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  max-width: 640px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  list-style: none;
+  border: 1px solid var(--book-line);
+  border-radius: 12px;
+  background: #fff;
 }
 
-.book-confirm .bigid {
-  font-size: 28px;
-  letter-spacing: 0.04em;
+.book-steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  border-top: 1px solid var(--book-line);
+  font-size: 14px;
 }
 
-.book-return {
-  align-self: flex-start;
-  padding: 12px 18px;
-  border: 1px solid var(--book-sage);
-  border-radius: 4px;
-  color: var(--book-sage-deep);
-  letter-spacing: 0.08em;
-  text-decoration: none;
-  text-transform: uppercase;
+.book-steps li:first-child {
+  border-top: 0;
+}
+
+.book-step-n {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--book-paper);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
 }
 
 .casa-reserve {

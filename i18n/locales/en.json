@@ -240,6 +240,8 @@
     "expiredK": "Payment not completed",
     "expiredTitle": "Your request is safe",
     "expiredLead": "The online payment was not completed in time. Your request stays with the team, who will contact you.",
+    "reference": "Booking reference",
+    "deposit": "Deposit",
     "return": "Return to the site"
   },
   "questionnaire": {
@@ -338,7 +340,9 @@
     "email": "Email",
     "phone": "Phone",
     "payLater": "Request, pay later",
+    "payLaterHint": "Nothing is charged now.",
     "payDeposit": "Pay the deposit now",
+    "payDepositHint": "{amount} charged now.",
     "holdRooms": "Hold these rooms",
     "submit": "Confirm",
     "priceChanged": "The price changed. Review the new total.",

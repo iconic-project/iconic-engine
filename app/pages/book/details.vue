@@ -24,6 +24,7 @@ definePageMeta({ layout: 'book' })
 
 const { t } = useI18n()
 const { request } = useApi()
+const { format } = useMoney()
 const { session } = useStaySession()
 const requestUrl = useRequestURL()
 
@@ -65,13 +66,25 @@ function declarationLabel(code: typeof documents[number]): string {
   }
 }
 
-function onDoc(code: string, event: Event): void {
-  const target = event.target
-
-  if (target instanceof HTMLInputElement) {
-    toggleDoc(code, target.checked)
+const payPaths = computed(() => [
+  {
+    label: t('stayShop.payLater'),
+    description: t('stayShop.payLaterHint'),
+    value: 'PAY_LATER' as const
+  },
+  {
+    label: t('stayShop.payDeposit'),
+    description: t('stayShop.payDepositHint', { amount: format(quote.value?.deposit ?? 0) }),
+    value: 'PAY_DEPOSIT' as const
   }
-}
+])
+
+const detailsReady = computed(() =>
+  firstName.value.trim() !== ''
+  && lastName.value.trim() !== ''
+  && email.value.trim() !== ''
+  && documents.every(code => accepted.value.includes(code))
+)
 
 const remaining = computed(() => {
   const expires = session.value.hold?.expiresAt
@@ -146,6 +159,10 @@ async function loadQuote(): Promise<void> {
   } catch (error: unknown) {
     formError.value = errorData(error).message ?? ''
   }
+}
+
+function setDoc(code: string, value: boolean | 'indeterminate'): void {
+  toggleDoc(code, value === true)
 }
 
 function toggleDoc(code: string, on: boolean): void {
@@ -274,85 +291,106 @@ async function submit(): Promise<void> {
         {{ session.hold ? t('book.stepPay') : t('stayShop.yourDetails') }}
       </h1>
       <StaySummary :quote="quote" />
-      <p v-if="session.hold">
-        {{ t('stayShop.hold') }} {{ t('stayShop.holdLeft', { time: remaining }) }}
-      </p>
-      <button
-        v-if="session.hold && !session.hold.extended"
-        type="button"
-        class="book-add"
-        @click="extendHold"
+      <div
+        v-if="session.hold"
+        class="book-hold"
       >
-        {{ t('stayShop.extend') }}
-      </button>
+        <div>
+          <p class="book-hold-label">
+            {{ t('stayShop.hold') }}
+          </p>
+          <p class="book-hold-time">
+            {{ t('stayShop.holdLeft', { time: remaining }) }}
+          </p>
+        </div>
+        <UButton
+          v-if="!session.hold.extended"
+          type="button"
+          color="neutral"
+          variant="outline"
+          @click="extendHold"
+        >
+          {{ t('stayShop.extend') }}
+        </UButton>
+      </div>
       <form
         class="details"
         @submit.prevent="session.hold ? submit() : holdRooms()"
       >
-        <template v-if="!session.hold">
-          <label>
-            {{ t('stayShop.firstName') }}
-            <input
+        <div
+          v-if="!session.hold"
+          class="book-fields"
+        >
+          <UFormField
+            :label="t('stayShop.firstName')"
+            required
+          >
+            <UInput
               v-model="firstName"
+              autocomplete="given-name"
               required
-            >
-          </label>
-          <label>
-            {{ t('stayShop.lastName') }}
-            <input
+              class="w-full"
+            />
+          </UFormField>
+          <UFormField
+            :label="t('stayShop.lastName')"
+            required
+          >
+            <UInput
               v-model="lastName"
+              autocomplete="family-name"
               required
-            >
-          </label>
-          <label>
-            {{ t('stayShop.email') }}
-            <input
+              class="w-full"
+            />
+          </UFormField>
+          <UFormField
+            :label="t('stayShop.email')"
+            required
+            class="book-span"
+          >
+            <UInput
               v-model="email"
               type="email"
+              autocomplete="email"
               required
-            >
-          </label>
-          <label>
-            {{ t('stayShop.phone') }}
-            <input
+              class="w-full"
+            />
+          </UFormField>
+          <UFormField
+            :label="t('stayShop.phone')"
+            class="book-span"
+          >
+            <UInput
               v-model="phone"
               type="tel"
-            >
-          </label>
-          <label
-            v-for="code in documents"
-            :key="code"
-            class="book-check"
-          >
-            <input
-              type="checkbox"
-              :checked="accepted.includes(code)"
-              @change="onDoc(code, $event)"
-            >
-            {{ declarationLabel(code) }}
-          </label>
-        </template>
-        <fieldset
+              autocomplete="tel"
+              class="w-full"
+            />
+          </UFormField>
+          <div class="book-declarations">
+            <UCheckbox
+              v-for="code in documents"
+              :key="code"
+              :model-value="accepted.includes(code)"
+              :label="declarationLabel(code)"
+              @update:model-value="setDoc(code, $event)"
+            />
+          </div>
+        </div>
+        <URadioGroup
           v-else
-          class="book-pay"
-        >
-          <label class="book-pay-opt">
-            <input
-              v-model="path"
-              type="radio"
-              value="PAY_LATER"
-            >
-            {{ t('stayShop.payLater') }}
-          </label>
-          <label class="book-pay-opt">
-            <input
-              v-model="path"
-              type="radio"
-              value="PAY_DEPOSIT"
-            >
-            {{ t('stayShop.payDeposit') }}
-          </label>
-        </fieldset>
+          v-model="path"
+          variant="card"
+          color="primary"
+          size="lg"
+          :items="payPaths"
+          :ui="{
+            fieldset: 'w-full gap-2',
+            item: 'w-full',
+            label: 'font-normal',
+            description: 'font-normal'
+          }"
+        />
         <p
           v-if="priceChanged"
           class="book-error"
@@ -369,12 +407,15 @@ async function submit(): Promise<void> {
         >
           {{ formError }}
         </p>
-        <button
+        <UButton
           type="submit"
-          class="book-search-btn"
+          color="primary"
+          size="lg"
+          block
+          :disabled="!session.hold && !detailsReady"
         >
           {{ session.hold ? t('book.stepPay') : t('stayShop.holdRooms') }}
-        </button>
+        </UButton>
       </form>
     </div>
   </div>

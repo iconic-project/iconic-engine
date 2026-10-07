@@ -145,98 +145,86 @@ const heading = computed(() => {
       return { k: t('confirm.requestK'), t: t('confirm.requestTitle') }
   }
 })
+
+const showSteps = computed(() => screen.value === 'pay_later' || screen.value === 'confirmed')
 </script>
 
 <template>
-  <div class="book-confirm">
-    <span class="mono klabel">{{ heading.k }}</span>
-    <h1 class="disp">
-      {{ heading.t }}
-    </h1>
+  <div class="book-card book-confirm">
+    <div>
+      <p class="book-kicker">
+        {{ heading.k }}
+      </p>
+      <h1 class="disp">
+        {{ heading.t }}
+      </h1>
+    </div>
     <StaySummary
       v-if="session.quote"
       :quote="session.quote"
+      :due-label="t('confirm.deposit')"
     />
     <div
       v-if="references.length"
-      class="bigid"
+      class="book-ref"
     >
-      {{ references.join(' · ') }}
+      <p class="book-kicker">
+        {{ t('confirm.reference') }}
+      </p>
+      <p class="book-ref-id">
+        {{ references.join(' · ') }}
+      </p>
     </div>
     <p
       v-if="screen === 'confirming'"
-      class="sub"
+      class="book-confirm-lead"
     >
       {{ t('confirm.confirmingLead') }}
     </p>
     <p
       v-else-if="screen === 'processing'"
-      class="sub"
+      class="book-confirm-lead"
     >
       {{ t('confirm.processingLead', { email }) }}
       <a :href="`mailto:${t('search.contactEmail')}`">{{ t('search.contactEmail') }}</a>
     </p>
     <p
       v-else-if="screen === 'expired'"
-      class="sub"
+      class="book-confirm-lead"
     >
       {{ t('confirm.expiredLead') }}
     </p>
     <p
       v-else-if="screen === 'confirmed'"
-      class="sub"
+      class="book-confirm-lead"
     >
       {{ t('confirm.paidLead', { email }) }}
     </p>
     <p
       v-else
-      class="sub"
+      class="book-confirm-lead"
     >
       {{ t('confirm.requestLead', { email }) }}
     </p>
-    <div
-      v-if="screen === 'pay_later'"
-      class="next3"
+    <ol
+      v-if="showSteps"
+      class="book-steps"
     >
-      <div
+      <li
         v-for="(step, index) in steps"
         :key="step"
-        class="nx"
       >
-        <div class="n">
-          {{ index + 1 }}
-        </div>
-        <p>{{ step }}</p>
-      </div>
-    </div>
-    <div
-      v-else-if="screen === 'confirmed'"
-      class="next3"
-    >
-      <div class="nx">
-        <div class="n">
-          1
-        </div>
-        <p>{{ t('confirm.paid1') }}</p>
-      </div>
-      <div class="nx">
-        <div class="n">
-          2
-        </div>
-        <p>{{ t('confirm.paid2') }}</p>
-      </div>
-      <div class="nx">
-        <div class="n">
-          3
-        </div>
-        <p>{{ t('confirm.paid3') }}</p>
-      </div>
-    </div>
-    <NuxtLink
+        <span class="book-step-n">{{ index + 1 }}</span>
+        <span>{{ step }}</span>
+      </li>
+    </ol>
+    <UButton
       to="/"
-      class="book-return"
+      color="neutral"
+      variant="outline"
+      class="self-start"
     >
       {{ t('confirm.return') }}
-    </NuxtLink>
+    </UButton>
   </div>
 </template>
