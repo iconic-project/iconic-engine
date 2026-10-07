@@ -1,8 +1,11 @@
 <script setup lang="ts">
 useHead({
-  titleTemplate: '%s · Iconic',
+  titleTemplate: '%s · Casa Pestagua',
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+  ],
+  link: [
+    { rel: 'icon', type: 'image/png', href: '/casa/assets/logo.png' }
   ],
   htmlAttrs: {
     lang: 'en'

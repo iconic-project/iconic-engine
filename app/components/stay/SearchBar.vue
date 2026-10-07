@@ -8,6 +8,7 @@ const props = defineProps<{
   maxRooms: number
   childMinAge: number
   childMaxAge: number
+  propertyName?: string
   initial?: StaySearch | null
 }>()
 
@@ -45,17 +46,6 @@ watch(month, () => {
 watch([adults, () => childAges.value.length], () => {
   void loadCalendar()
 })
-
-function setChildren(event: Event): void {
-  const target = event.target
-
-  if (!(target instanceof HTMLInputElement)) {
-    return
-  }
-
-  const next = Math.max(0, Number(target.value))
-  childAges.value = Array.from({ length: next }, (_, index) => childAges.value[index] ?? props.childMinAge)
-}
 
 function setAge(index: number, event: Event): void {
   const target = event.target
@@ -113,39 +103,109 @@ function submit(): void {
     rooms: rooms.value
   })
 }
+
+function stepAdults(delta: number): void {
+  adults.value = Math.max(1, adults.value + delta)
+}
+
+function stepChildren(delta: number): void {
+  setChildrenCount(Math.max(0, childAges.value.length + delta))
+}
+
+function setChildrenCount(next: number): void {
+  childAges.value = Array.from({ length: next }, (_, index) => childAges.value[index] ?? props.childMinAge)
+}
+
+function stepRooms(delta: number): void {
+  rooms.value = Math.min(props.maxRooms, Math.max(1, rooms.value + delta))
+}
 </script>
 
 <template>
   <form
-    class="stay-search"
+    class="book-search"
     @submit.prevent="submit"
   >
+    <p class="book-kicker">
+      {{ t('book.destination') }}
+    </p>
+    <p
+      v-if="propertyName"
+      class="book-destination"
+    >
+      {{ propertyName }}
+    </p>
+
     <AnkStayInput
       v-model="range"
       :min-nights="minNights"
       :max-nights="maxNights"
+      :months="1"
       :night-info="nightInfo"
     />
-    <label>
-      {{ t('stayShop.adults') }}
-      <input
-        v-model.number="adults"
-        type="number"
-        min="1"
-      >
-    </label>
-    <label>
-      {{ t('stayShop.children') }}
-      <input
-        :value="childAges.length"
-        type="number"
-        min="0"
-        @input="setChildren"
-      >
-    </label>
+    <p class="book-note">
+      {{ t('book.priceNote') }}
+    </p>
+
+    <p class="book-kicker">
+      {{ t('book.guests') }}
+    </p>
+    <div class="book-guest">
+      <div>
+        <p class="book-guest-label">
+          {{ t('stayShop.adults') }}
+        </p>
+        <p class="book-guest-note">
+          {{ t('book.adultNote', { age: childMaxAge + 1 }) }}
+        </p>
+      </div>
+      <div class="book-stepper">
+        <button
+          type="button"
+          :disabled="adults <= 1"
+          @click="stepAdults(-1)"
+        >
+          −
+        </button>
+        <span>{{ adults }}</span>
+        <button
+          type="button"
+          @click="stepAdults(1)"
+        >
+          +
+        </button>
+      </div>
+    </div>
+    <div class="book-guest">
+      <div>
+        <p class="book-guest-label">
+          {{ t('stayShop.children') }}
+        </p>
+        <p class="book-guest-note">
+          {{ t('book.childNote', { min: childMinAge, max: childMaxAge }) }}
+        </p>
+      </div>
+      <div class="book-stepper">
+        <button
+          type="button"
+          :disabled="childAges.length === 0"
+          @click="stepChildren(-1)"
+        >
+          −
+        </button>
+        <span>{{ childAges.length }}</span>
+        <button
+          type="button"
+          @click="stepChildren(1)"
+        >
+          +
+        </button>
+      </div>
+    </div>
     <label
       v-for="(age, index) in childAges"
       :key="index"
+      class="book-age"
     >
       {{ t('stayShop.childAge', { n: index + 1 }) }}
       <input
@@ -156,21 +216,46 @@ function submit(): void {
         @input="setAge(index, $event)"
       >
     </label>
-    <label>
-      {{ t('stayShop.rooms') }}
-      <input
-        v-model.number="rooms"
-        type="number"
-        min="1"
-        :max="maxRooms"
-      >
-    </label>
-    <UButton
-      type="submit"
-      :disabled="range === null || !agesReady"
-      @click="submit"
+
+    <button
+      type="button"
+      class="book-add"
+      :disabled="rooms >= maxRooms"
+      @click="stepRooms(1)"
     >
-      {{ t('stayShop.check') }}
-    </UButton>
+      {{ t('book.addRoom') }}
+    </button>
+    <div
+      v-if="rooms > 1"
+      class="book-guest"
+    >
+      <p class="book-guest-label">
+        {{ t('stayShop.rooms') }}
+      </p>
+      <div class="book-stepper">
+        <button
+          type="button"
+          @click="stepRooms(-1)"
+        >
+          −
+        </button>
+        <span>{{ rooms }}</span>
+        <button
+          type="button"
+          :disabled="rooms >= maxRooms"
+          @click="stepRooms(1)"
+        >
+          +
+        </button>
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="book-search-btn"
+      :disabled="range === null || !agesReady"
+    >
+      {{ t('book.search') }}
+    </button>
   </form>
 </template>

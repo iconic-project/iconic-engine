@@ -20,6 +20,8 @@ type ErrorData = {
   quote?: { total?: number }
 }
 
+definePageMeta({ layout: 'book' })
+
 const { t } = useI18n()
 const { request } = useApi()
 const { session } = useStaySession()
@@ -258,64 +260,83 @@ async function submit(): Promise<void> {
 
 <template>
   <div>
-    <p v-if="formError && !quote">
+    <p
+      v-if="formError && !quote"
+      class="book-error"
+    >
       {{ formError }}
     </p>
-    <div v-if="quote">
+    <div
+      v-if="quote"
+      class="book-card"
+    >
       <h1 class="disp">
-        {{ t('stayShop.yourDetails') }}
+        {{ session.hold ? t('book.stepPay') : t('stayShop.yourDetails') }}
       </h1>
       <StaySummary :quote="quote" />
-      <p
-        v-if="session.hold"
-        class="mono"
-      >
+      <p v-if="session.hold">
         {{ t('stayShop.hold') }} {{ t('stayShop.holdLeft', { time: remaining }) }}
       </p>
-      <UButton
+      <button
         v-if="session.hold && !session.hold.extended"
         type="button"
-        color="neutral"
-        variant="outline"
+        class="book-add"
         @click="extendHold"
       >
         {{ t('stayShop.extend') }}
-      </UButton>
+      </button>
       <form
         class="details"
         @submit.prevent="session.hold ? submit() : holdRooms()"
       >
-        <label>
-          {{ t('stayShop.firstName') }}
-          <input
-            v-model="firstName"
-            required
-          >
-        </label>
-        <label>
-          {{ t('stayShop.lastName') }}
-          <input
-            v-model="lastName"
-            required
-          >
-        </label>
-        <label>
-          {{ t('stayShop.email') }}
-          <input
-            v-model="email"
-            type="email"
-            required
-          >
-        </label>
-        <label>
-          {{ t('stayShop.phone') }}
-          <input
-            v-model="phone"
-            type="tel"
-          >
-        </label>
-        <fieldset>
+        <template v-if="!session.hold">
           <label>
+            {{ t('stayShop.firstName') }}
+            <input
+              v-model="firstName"
+              required
+            >
+          </label>
+          <label>
+            {{ t('stayShop.lastName') }}
+            <input
+              v-model="lastName"
+              required
+            >
+          </label>
+          <label>
+            {{ t('stayShop.email') }}
+            <input
+              v-model="email"
+              type="email"
+              required
+            >
+          </label>
+          <label>
+            {{ t('stayShop.phone') }}
+            <input
+              v-model="phone"
+              type="tel"
+            >
+          </label>
+          <label
+            v-for="code in documents"
+            :key="code"
+            class="book-check"
+          >
+            <input
+              type="checkbox"
+              :checked="accepted.includes(code)"
+              @change="onDoc(code, $event)"
+            >
+            {{ declarationLabel(code) }}
+          </label>
+        </template>
+        <fieldset
+          v-else
+          class="book-pay"
+        >
+          <label class="book-pay-opt">
             <input
               v-model="path"
               type="radio"
@@ -323,7 +344,7 @@ async function submit(): Promise<void> {
             >
             {{ t('stayShop.payLater') }}
           </label>
-          <label>
+          <label class="book-pay-opt">
             <input
               v-model="path"
               type="radio"
@@ -332,30 +353,28 @@ async function submit(): Promise<void> {
             {{ t('stayShop.payDeposit') }}
           </label>
         </fieldset>
-        <label
-          v-for="code in documents"
-          :key="code"
+        <p
+          v-if="priceChanged"
+          class="book-error"
         >
-          <input
-            type="checkbox"
-            :checked="accepted.includes(code)"
-            @change="onDoc(code, $event)"
-          >
-          {{ declarationLabel(code) }}
-        </label>
-        <p v-if="priceChanged">
           {{ t('stayShop.priceChanged') }}
           <AnkMoney
             v-if="expectedTotal !== null"
             :amount="expectedTotal"
           />
         </p>
-        <p v-if="formError">
+        <p
+          v-if="formError"
+          class="book-error"
+        >
           {{ formError }}
         </p>
-        <UButton type="submit">
-          {{ session.hold ? t('stayShop.submit') : t('stayShop.holdRooms') }}
-        </UButton>
+        <button
+          type="submit"
+          class="book-search-btn"
+        >
+          {{ session.hold ? t('book.stepPay') : t('stayShop.holdRooms') }}
+        </button>
       </form>
     </div>
   </div>

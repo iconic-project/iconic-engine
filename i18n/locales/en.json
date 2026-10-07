@@ -1,14 +1,42 @@
 {
   "seo": {
-    "description": "Book a room at Iconic. Any arrival day, priced by the night."
+    "description": "Casa Pestagua, hotel boutique de lujo en Cartagena de Indias."
   },
   "nav": {
     "expeditions": "Expeditions",
     "charter": "Private Charter"
   },
   "brand": {
-    "alt": "ICONIC",
+    "alt": "Casa Pestagua Hotel",
     "subtitle": "ROOMS BY THE NIGHT"
+  },
+  "casa": {
+    "logoAlt": "Casa Pestagua Hotel",
+    "metaTitle": "Casa Pestagua — Hotel boutique de lujo en Cartagena",
+    "loader": "Casa Pestagua",
+    "welcome": "Bienvenidos a Casa Pestagua",
+    "place": "– Cartagena de Indias, Colombia –",
+    "scroll": "Scroll",
+    "galleryLabel": "Galería de Casa Pestagua",
+    "entrada": "Entrada al patio colonial",
+    "suite": "Suite con techo de madera y cama con dosel",
+    "comedor": "Comedor con ventanales en arco",
+    "historyTitle": "Adéntrate en tres siglos de historia",
+    "historyBody1": "Construida en el siglo XVIII y restaurada en 2022, Casa Pestagua se encuentra dentro de la ciudad amurallada de Cartagena, declarada Patrimonio de la Humanidad por la UNESCO por su importancia histórica y cultural.",
+    "historyLead": "Miembro de ",
+    "relais": "Relais & Châteaux",
+    "historyMid": " y de la red ",
+    "virtuoso": "Virtuoso",
+    "historyMid2": ", y galardonada con ",
+    "michelin": "Dos Llaves Michelin",
+    "historyEnd": " en 2025, Casa Pestagua es un lugar donde la historia, la belleza y la auténtica hospitalidad se dan cita, con discreción y sin artificios.",
+    "book": "Reserva ahora",
+    "houseEyebrow": "La casa",
+    "houseTitle": "Un palacio que renace",
+    "houseBody1": "En Casa Pestagua, durante la restauración de 2022 se conservó y se puso en valor cada elemento, no como si se tratara de un museo, sino como un espacio para vivir.",
+    "houseBody2": "Afuera, Cartagena vibra; aquí dentro, el tiempo te pertenece.",
+    "discover": "Descubre más",
+    "terraceAlt": "Terraza y patio colonial de Casa Pestagua"
   },
   "hero": {
     "coords": "0°40′S 90°33′W · Galápagos, Ecuador",
@@ -17,15 +45,42 @@
     "sub": "Any arrival day. Rooms by the night."
   },
   "crumbs": {
-    "dates": "1 · Dates",
-    "rooms": "2 · Rooms",
-    "details": "3 · Your details",
-    "confirmation": "4 · Confirmation"
+    "dates": "Dates",
+    "rooms": "Rooms",
+    "details": "Your details",
+    "pay": "Pay",
+    "confirmation": "Confirmation"
+  },
+  "book": {
+    "destination": "Destination",
+    "guests": "Guests",
+    "adultNote": "{age} years or older",
+    "childNote": "Ages {min}–{max}",
+    "addRoom": "+ Add room",
+    "search": "Search",
+    "priceNote": "Calendar prices are the lowest one-night rate.",
+    "stepRooms": "Rooms",
+    "stepDetails": "Your details",
+    "stepPay": "Pay",
+    "stepConfirmation": "Confirmation",
+    "back": "Back",
+    "close": "Close",
+    "rates": "Rates and packages",
+    "perNightLabel": "{price} / night",
+    "lowest": "Lowest rate",
+    "sleeps": "Sleeps {n}",
+    "totalLabel": "Total",
+    "proceed": "Continue",
+    "stayLine": "{dates} · {guests}, {rooms}",
+    "guestOne": "1 guest",
+    "guestMany": "{n} guests",
+    "roomOne": "1 room",
+    "roomMany": "{n} rooms"
   },
   "footer": {
-    "line1": "Iconic · Rooms by the night",
-    "line2Before": "0°40′S 90°33′W",
-    "line2After": " · info{'@'}iconic.co · iconic.co"
+    "line1": "Casa Pestagua · Hotel",
+    "line2Before": "Cartagena de Indias",
+    "line2After": " · Colombia"
   },
   "pages": {
     "home": "Book Your Expedition",

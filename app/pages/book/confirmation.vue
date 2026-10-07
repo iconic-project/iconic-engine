@@ -2,6 +2,8 @@
 import type { CheckoutStatus } from '../../types/api'
 import { confirmationScreen, POLL_INTERVAL_MS } from '../../utils/confirmationPoll'
 
+definePageMeta({ layout: 'book' })
+
 const { t } = useI18n()
 const route = useRoute()
 const { request } = useApi()
@@ -146,7 +148,7 @@ const heading = computed(() => {
 </script>
 
 <template>
-  <div class="confirm">
+  <div class="book-confirm">
     <span class="mono klabel">{{ heading.k }}</span>
     <h1 class="disp">
       {{ heading.t }}
@@ -232,7 +234,7 @@ const heading = computed(() => {
     </div>
     <NuxtLink
       to="/"
-      class="btn o"
+      class="book-return"
     >
       {{ t('confirm.return') }}
     </NuxtLink>

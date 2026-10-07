@@ -26,7 +26,7 @@ export default defineNuxtConfig({
     '@nuxt/eslint'
   ],
 
-  css: ['~/assets/css/engine.css'],
+  css: ['~/assets/css/engine.css', '~/assets/css/casa.css', '~/assets/css/book.css'],
 
   runtimeConfig: {
     public: {

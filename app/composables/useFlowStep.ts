@@ -1,7 +1,8 @@
-export type FlowStep = 1 | 2 | 3 | 4
+export type FlowStep = 1 | 2 | 3 | 4 | 5
 
 export function useFlowStep() {
   const route = useRoute()
+  const { session } = useStaySession()
 
   const step = computed<FlowStep | null>(() => {
     const path = route.path
@@ -15,11 +16,11 @@ export function useFlowStep() {
     }
 
     if (path === '/book/details') {
-      return 3
+      return session.value.hold ? 4 : 3
     }
 
     if (path === '/book/confirmation') {
-      return 4
+      return 5
     }
 
     return null

@@ -9,8 +9,13 @@ const { stayOn } = useFlowStep()
       to="/"
       class="brand"
     >
-      <AnkWordmark />
-      <small>{{ t('brand.subtitle') }}</small>
+      <img
+        class="casa-logo"
+        src="/casa/assets/logo.png"
+        width="350"
+        height="186"
+        :alt="t('casa.logoAlt')"
+      >
     </NuxtLink>
 
     <nav class="topnav">

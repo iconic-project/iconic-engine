@@ -203,6 +203,16 @@ body {
   color: var(--fg-brand);
 }
 
+.engine-footer .casa-logo {
+  height: 48px;
+  margin: 0 auto 18px;
+}
+
+.engine-footer .casa-logo {
+  height: 48px;
+  margin: 0 auto 18px;
+}
+
 .engine-footer {
   position: relative;
   padding: 44px 4vw 32px;

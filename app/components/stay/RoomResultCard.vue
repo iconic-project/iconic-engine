@@ -14,11 +14,21 @@ const props = withDefaults(defineProps<{
   checkOut?: string
   adults?: number
   children?: number
+  photo?: string | null
+  description?: string | null
+  bed?: string | null
+  sleeps?: number | null
+  planNames?: Record<string, string>
 }>(), {
   checkIn: '',
   checkOut: '',
   adults: 1,
-  children: 0
+  children: 0,
+  photo: null,
+  description: null,
+  bed: null,
+  sleeps: null,
+  planNames: () => ({})
 })
 
 const emit = defineEmits<{
@@ -87,6 +97,28 @@ function nightAmount(item: AvailabilityQuote | null): number | null {
   return Math.min(...item.night_lines.map(line => line.total))
 }
 
+function planName(code: string): string {
+  return props.planNames[code] ?? code
+}
+
+const lowestPlan = computed(() => {
+  const quotes = props.roomType.quotes
+
+  if (quotes.length < 2) {
+    return ''
+  }
+
+  return quotes.reduce((lowest, item) => item.total < lowest.total ? item : lowest).rate_plan
+})
+
+function choosePlan(code: string): void {
+  emit('update:plan', code)
+
+  if (props.quantity === 0) {
+    emit('update:quantity', 1)
+  }
+}
+
 function setQuantity(event: Event): void {
   const target = event.target
 
@@ -126,11 +158,8 @@ function reasonText(reason: ReturnType<typeof parseReason>): string {
 </script>
 
 <template>
-  <article class="room-card">
+  <article class="book-room">
     <header>
-      <p class="mono">
-        {{ roomType.code }}
-      </p>
       <h2 class="disp">
         {{ roomType.name }}
       </h2>
@@ -197,6 +226,36 @@ function reasonText(reason: ReturnType<typeof parseReason>): string {
       </template>
     </form>
 
+    <img
+      v-if="photo"
+      class="book-room-photo"
+      :src="photo"
+      :alt="roomType.name"
+    >
+    <p
+      v-if="description"
+      class="book-room-copy"
+    >
+      {{ description }}
+    </p>
+    <ul
+      v-if="bed || sleeps"
+      class="book-room-facts"
+    >
+      <li v-if="bed">
+        {{ bed }}
+      </li>
+      <li v-if="sleeps">
+        {{ t('book.sleeps', { n: sleeps }) }}
+      </li>
+    </ul>
+
+    <h3
+      v-if="roomType.quotes.length"
+      class="book-rates-title"
+    >
+      {{ t('book.rates') }}
+    </h3>
     <div
       v-if="roomType.quotes.length"
       class="plans"
@@ -204,18 +263,36 @@ function reasonText(reason: ReturnType<typeof parseReason>): string {
       <label
         v-for="item in roomType.quotes"
         :key="item.rate_plan"
-        class="plan"
+        class="book-rate"
+        :class="{ 'book-rate--on': plan === item.rate_plan && quantity > 0 }"
       >
         <input
           type="radio"
           :name="`plan-${roomType.code}`"
           :value="item.rate_plan"
           :checked="plan === item.rate_plan"
-          @change="emit('update:plan', item.rate_plan)"
+          @change="choosePlan(item.rate_plan)"
         >
-        <span>{{ item.rate_plan }}</span>
-        <span>{{ format(item.total) }} {{ t('stayShop.forStay') }}</span>
-        <span v-if="nightAmount(item) !== null">{{ format(nightAmount(item) ?? 0) }} {{ t('stayShop.perNight') }}</span>
+        <span
+          v-if="item.rate_plan === lowestPlan"
+          class="book-badge"
+        >{{ t('book.lowest') }}</span>
+        <p
+          v-if="nightAmount(item) !== null"
+          class="book-rate-price"
+        >
+          {{ t('book.perNightLabel', { price: format(nightAmount(item) ?? 0) }) }}
+        </p>
+        <p class="book-rate-name">
+          {{ planName(item.rate_plan) }}
+        </p>
+        <p class="book-rate-meta">
+          {{ format(item.total) }} {{ t('stayShop.forStay') }}
+          <span
+            v-if="nightAmount(item) !== null"
+            class="book-sr"
+          >{{ format(nightAmount(item) ?? 0) }} {{ t('stayShop.perNight') }}</span>
+        </p>
       </label>
     </div>
 

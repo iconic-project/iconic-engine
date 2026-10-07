@@ -1,12 +1,17 @@
 <script setup lang="ts">
-import type { AvailabilityFeed, PropertyFeed } from '../../types/stay'
+import type { AvailabilityFeed, AvailabilityType, PropertyFeed, StayRoomType } from '../../types/stay'
+import { mediaUrl } from '../../utils/mediaUrl'
 import { distributeParty, previewParty, type PlannedRoom } from '../../utils/partyPlan'
 import { addNights, nightsBetween, parsePicks, parseStayQuery, stayQuery, type StayPick } from '../../utils/stayQuery'
+
+definePageMeta({ layout: 'book' })
 
 const route = useRoute()
 const { t } = useI18n()
 const { request } = useApi()
+const { format } = useDates()
 const { session } = useStaySession()
+const config = useRuntimeConfig()
 const requestUrl = useRequestURL()
 
 const search = computed(() => parseStayQuery(route.query))
@@ -206,24 +211,75 @@ function continueStay(): void {
 }
 
 const nights = computed(() => search.value ? nightsBetween(search.value.checkIn, search.value.checkOut) : 0)
+
+function catalogue(code: string): StayRoomType | null {
+  return property.value?.room_types.find(type => type.code === code) ?? null
+}
+
+function photoOf(code: string): string | null {
+  const photo = catalogue(code)?.photos[0]?.url ?? null
+
+  return mediaUrl(String(config.public.apiBase), photo)
+}
+
+const planNames = computed(() => {
+  const names: Record<string, string> = {}
+
+  for (const plan of property.value?.rate_plans ?? []) {
+    names[plan.code] = plan.name
+  }
+
+  return names
+})
+
+const stayLine = computed(() => {
+  const current = search.value
+
+  if (!current) {
+    return ''
+  }
+
+  const guests = current.adults + current.childAges.length
+
+  return t('book.stayLine', {
+    dates: `${format(current.checkIn)} – ${format(current.checkOut)}`,
+    guests: guests === 1 ? t('book.guestOne') : t('book.guestMany', { n: guests }),
+    rooms: current.rooms === 1 ? t('book.roomOne') : t('book.roomMany', { n: current.rooms })
+  })
+})
+
+const dockTotal = computed(() => {
+  const feed = availability.value
+  const pick = picks.value.length === 1 ? picks.value[0] : null
+
+  if (!feed || !pick || pick.quantity !== 1) {
+    return null
+  }
+
+  const type = feed.room_types.find(item => item.code === pick.roomType)
+  const quote = type?.quotes.find(item => item.rate_plan === pick.ratePlan)
+
+  return quote?.total_including_charged_taxes ?? null
+})
+
+function roomKey(type: AvailabilityType): string {
+  return type.code
+}
 </script>
 
 <template>
   <div v-if="search && property">
-    <h1 class="disp">
-      {{ t('stayShop.results') }}
-    </h1>
-    <p>{{ t('stayShop.chooseCount', { n: search.rooms }) }}</p>
+    <p class="book-stayline">
+      <span>{{ stayLine }}</span>
+      <span>{{ t('stayShop.nights', { n: nights }) }}</span>
+    </p>
     <p v-if="loadError">
       {{ loadError }}
     </p>
-    <div
-      v-if="availability"
-      class="list"
-    >
+    <div v-if="availability">
       <StayRoomResultCard
         v-for="type in availability.room_types"
-        :key="type.code"
+        :key="roomKey(type)"
         :room-type="type"
         :threshold="property.settings.availability.low_availability_threshold"
         :quantity="quantityOf(type.code)"
@@ -233,6 +289,11 @@ const nights = computed(() => search.value ? nightsBetween(search.value.checkIn,
         :check-out="search.checkOut"
         :adults="search.adults"
         :children="search.childAges.length"
+        :photo="photoOf(type.code)"
+        :description="catalogue(type.code)?.description ?? null"
+        :bed="catalogue(type.code)?.bed_setup ?? null"
+        :sleeps="catalogue(type.code)?.max_occupancy ?? null"
+        :plan-names="planNames"
         @update:quantity="setPick(type.code, $event, planOf(type.code))"
         @update:plan="plans[type.code] = $event; setPick(type.code, quantityOf(type.code), $event)"
         @change-nights="changeNights"
@@ -241,15 +302,21 @@ const nights = computed(() => search.value ? nightsBetween(search.value.checkIn,
     <p v-if="chosen > 0 && !partyOk">
       {{ t('stayShop.partyFit') }}
     </p>
-    <UButton
-      type="button"
-      :disabled="!partyOk"
-      @click="continueStay"
-    >
-      {{ t('stayShop.continue') }}
-    </UButton>
-    <p class="mono">
-      {{ t('stayShop.nights', { n: nights }) }}
-    </p>
+    <div class="book-dock">
+      <p class="book-dock-total">
+        {{ t('book.totalLabel') }}
+        <strong v-if="dockTotal !== null">
+          <AnkMoney :amount="dockTotal" />
+        </strong>
+      </p>
+      <button
+        type="button"
+        class="book-proceed"
+        :disabled="!partyOk"
+        @click="continueStay"
+      >
+        {{ t('book.proceed') }}
+      </button>
+    </div>
   </div>
 </template>
