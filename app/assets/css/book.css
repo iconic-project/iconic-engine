@@ -34,6 +34,10 @@
   text-decoration: none;
 }
 
+.book-bar--plain {
+  grid-template-columns: 1fr;
+}
+
 .book-bar-title {
   margin: 0;
   font-size: 13px;
@@ -667,6 +671,15 @@
 
 .book-confirm-lead a {
   color: inherit;
+}
+
+.book-confirm .book-return {
+  width: 100%;
+  justify-content: center;
+  min-height: 52px;
+  margin-top: 4px;
+  padding: 16px 24px;
+  font-size: 15px;
 }
 
 .book-steps {

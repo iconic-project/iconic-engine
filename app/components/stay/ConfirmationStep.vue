@@ -231,9 +231,10 @@ const showSteps = computed(() => screen.value === 'pay_later' || screen.value ==
     <UButton
       v-if="embedded"
       type="button"
-      color="neutral"
-      variant="outline"
-      class="self-start"
+      color="primary"
+      size="lg"
+      block
+      class="book-return"
       @click="emit('done')"
     >
       {{ t('confirm.return') }}
@@ -241,9 +242,10 @@ const showSteps = computed(() => screen.value === 'pay_later' || screen.value ==
     <UButton
       v-else
       to="/"
-      color="neutral"
-      variant="outline"
-      class="self-start"
+      color="primary"
+      size="lg"
+      block
+      class="book-return"
     >
       {{ t('confirm.return') }}
     </UButton>

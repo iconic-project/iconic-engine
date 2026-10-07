@@ -152,6 +152,7 @@ onBeforeUnmount(() => {
           {{ title }}
         </h2>
         <button
+          v-if="step !== 'confirmation'"
           type="button"
           class="casa-reserve-close"
           data-reserve-close
@@ -160,8 +161,9 @@ onBeforeUnmount(() => {
         >
           ×
         </button>
+        <span v-else />
       </header>
-      <ShellEngineCrumbs v-if="step !== 'search'" />
+      <ShellEngineCrumbs v-if="step !== 'search' && step !== 'confirmation'" />
       <div class="casa-reserve-body">
         <StaySearchBar
           v-show="step === 'search'"
