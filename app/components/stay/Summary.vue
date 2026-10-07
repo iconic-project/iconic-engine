@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PropertyFeed, StayQuote, StayQuoteRoom } from '../../types/stay'
+import type { PropertyFeed, StayQuote, StayQuoteLine, StayQuoteRoom } from '../../types/stay'
 
 defineProps<{
   quote: StayQuote
@@ -14,6 +14,10 @@ const { request } = useApi()
 const { data: property } = await useAsyncData('engine-property', () =>
   request('/api/engine/property') as Promise<PropertyFeed>
 )
+
+function discountLines(room: StayQuoteRoom): Array<StayQuoteLine> {
+  return (room.lines ?? []).filter(line => line.amount < 0)
+}
 
 function roomLabel(room: StayQuoteRoom): string {
   const typeName = property.value?.room_types.find(item => item.code === room.room_type)?.name ?? room.room_type
@@ -63,6 +67,13 @@ function roomLabel(room: StayQuoteRoom): string {
           >
             <span>{{ formatDate(line.night, 'short') }}</span>
             <span>{{ format(line.total) }}</span>
+          </li>
+          <li
+            v-for="line in discountLines(room)"
+            :key="line.code"
+          >
+            <span>{{ line.label }}</span>
+            <span>{{ format(line.amount) }}</span>
           </li>
           <li
             v-for="tax in room.tax_lines.filter(item => item.shown_in_price_panel)"

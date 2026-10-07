@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { StayQuote } from '../../types/stay'
+import { withOnlineDeposit } from '../../utils/pathQuote'
 
 type QuoteBody = StayQuote
 
@@ -37,6 +38,8 @@ const accepted = ref<Array<string>>([])
 const formError = ref('')
 const priceChanged = ref(false)
 const expectedTotal = ref<number | null>(null)
+const onlineQuote = ref<QuoteBody | null>(null)
+const quoting = ref(false)
 const now = ref(Date.now())
 let timer: ReturnType<typeof setInterval> | undefined
 
@@ -50,6 +53,9 @@ if (!session.value.lines.length) {
 }
 
 const quote = computed(() => session.value.quote)
+const shownQuote = computed(() =>
+  path.value === 'PAY_DEPOSIT' && onlineQuote.value ? onlineQuote.value : quote.value
+)
 
 const documents = ['TERMS', 'CANCELLATION', 'PRIVACY', 'INSURANCE'] as const
 
@@ -74,7 +80,7 @@ const payPaths = computed(() => [
   },
   {
     label: t('stayShop.payDeposit'),
-    description: t('stayShop.payDepositHint', { amount: format(quote.value?.deposit ?? 0) }),
+    description: t('stayShop.payDepositHint', { amount: format(shownQuote.value?.deposit ?? 0) }),
     value: 'PAY_DEPOSIT' as const
   }
 ])
@@ -85,6 +91,24 @@ const detailsReady = computed(() =>
   && email.value.trim() !== ''
   && documents.every(code => accepted.value.includes(code))
 )
+
+const payBlocked = computed(() => {
+  if (!session.value.hold) {
+    return !detailsReady.value
+  }
+
+  return path.value === 'PAY_DEPOSIT' && (quoting.value || onlineQuote.value === null)
+})
+
+watch(path, (value) => {
+  expectedTotal.value = null
+  priceChanged.value = false
+  formError.value = ''
+
+  if (value === 'PAY_DEPOSIT') {
+    void loadPathQuote()
+  }
+})
 
 const remaining = computed(() => {
   const expires = session.value.hold?.expiresAt
@@ -161,6 +185,33 @@ async function loadQuote(): Promise<void> {
   }
 }
 
+async function loadPathQuote(): Promise<void> {
+  const search = session.value.search
+
+  if (!search || session.value.lines.length === 0) {
+    return
+  }
+
+  quoting.value = true
+
+  try {
+    const body = await request('/api/engine/quote', {
+      method: 'POST',
+      body: {
+        check_in: search.checkIn,
+        check_out: search.checkOut,
+        rooms: withOnlineDeposit(session.value.lines, 'PAY_DEPOSIT')
+      }
+    }) as QuoteBody
+    onlineQuote.value = body
+  } catch (error: unknown) {
+    onlineQuote.value = null
+    formError.value = errorData(error).message ?? ''
+  } finally {
+    quoting.value = false
+  }
+}
+
 function setDoc(code: string, value: boolean | 'indeterminate'): void {
   toggleDoc(code, value === true)
 }
@@ -232,7 +283,8 @@ async function extendHold(): Promise<void> {
 
 async function submit(): Promise<void> {
   const hold = session.value.hold
-  const total = expectedTotal.value ?? session.value.quote?.total
+  const priced = path.value === 'PAY_DEPOSIT' ? onlineQuote.value : session.value.quote
+  const total = expectedTotal.value ?? priced?.total
 
   if (!hold || total === null || total === undefined) {
     return
@@ -278,19 +330,19 @@ async function submit(): Promise<void> {
 <template>
   <div>
     <p
-      v-if="formError && !quote"
+      v-if="formError && !shownQuote"
       class="book-error"
     >
       {{ formError }}
     </p>
     <div
-      v-if="quote"
+      v-if="shownQuote"
       class="book-card"
     >
       <h1 class="disp">
         {{ session.hold ? t('book.stepPay') : t('stayShop.yourDetails') }}
       </h1>
-      <StaySummary :quote="quote" />
+      <StaySummary :quote="shownQuote" />
       <div
         v-if="session.hold"
         class="book-hold"
@@ -412,7 +464,7 @@ async function submit(): Promise<void> {
           color="primary"
           size="lg"
           block
-          :disabled="!session.hold && !detailsReady"
+          :disabled="payBlocked"
         >
           {{ session.hold ? t('book.stepPay') : t('stayShop.holdRooms') }}
         </UButton>

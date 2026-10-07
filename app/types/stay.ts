@@ -120,12 +120,19 @@ export type AvailabilityFeed = {
   room_types: Array<AvailabilityType>
 }
 
+export type StayQuoteLine = {
+  code: string
+  label: string
+  amount: number
+}
+
 export type StayQuoteRoom = {
   room_type: string
   rate_plan: string
   adults: number
   child_ages: Array<number>
   night_lines: Array<NightLine>
+  lines?: Array<StayQuoteLine>
   tax_lines: Array<TaxLine>
   total: number
   deposit: number
