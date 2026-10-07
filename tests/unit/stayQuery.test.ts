@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { parsePicks, parseStayQuery, stayQuery } from '../../app/utils/stayQuery'
+import { applyPick, parsePicks, parseStayQuery, stayQuery } from '../../app/utils/stayQuery'
 
 describe('stay query', () => {
   it('round-trips a shareable search and the room picks', () => {
@@ -26,6 +26,26 @@ describe('stay query', () => {
       child_ages: '8,11',
       pick: 'STD:1:BAR,TWN:1:NR'
     })
+  })
+
+  it('replaces the room when the stay is for one room', () => {
+    const picks = [
+      { roomType: 'STD', quantity: 1, ratePlan: 'NR' },
+      { roomType: 'TWN', quantity: 1, ratePlan: 'NR' }
+    ]
+
+    expect(applyPick(picks, 1, 'FAM', 1, 'BAR')).toEqual([
+      { roomType: 'FAM', quantity: 1, ratePlan: 'BAR' }
+    ])
+  })
+
+  it('keeps other rooms when the stay asks for more than one', () => {
+    const picks = [{ roomType: 'STD', quantity: 1, ratePlan: 'BAR' }]
+
+    expect(applyPick(picks, 2, 'TWN', 1, 'NR')).toEqual([
+      { roomType: 'STD', quantity: 1, ratePlan: 'BAR' },
+      { roomType: 'TWN', quantity: 1, ratePlan: 'NR' }
+    ])
   })
 
   it('rejects a stay that does not cover a night', () => {

@@ -105,6 +105,26 @@ export function stayQuery(search: StaySearch, picks: Array<StayPick> = []): Reco
   return query
 }
 
+export function applyPick(
+  picks: Array<StayPick>,
+  rooms: number,
+  roomType: string,
+  quantity: number,
+  ratePlan: string
+): Array<StayPick> {
+  const others = rooms === 1 ? [] : picks.filter(pick => pick.roomType !== roomType)
+
+  if (quantity < 1) {
+    return others
+  }
+
+  return [...others, {
+    roomType,
+    quantity: rooms === 1 ? 1 : quantity,
+    ratePlan
+  }]
+}
+
 export function parsePicks(value: unknown): Array<StayPick> {
   return one(value)
     .split(',')

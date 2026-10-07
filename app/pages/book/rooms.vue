@@ -2,7 +2,7 @@
 import type { AvailabilityFeed, AvailabilityType, PropertyFeed, StayRoomType } from '../../types/stay'
 import { mediaUrl } from '../../utils/mediaUrl'
 import { distributeParty, previewParty, type PlannedRoom } from '../../utils/partyPlan'
-import { addNights, nightsBetween, parsePicks, parseStayQuery, stayQuery, type StayPick } from '../../utils/stayQuery'
+import { addNights, applyPick, nightsBetween, parsePicks, parseStayQuery, stayQuery, type StayPick } from '../../utils/stayQuery'
 
 definePageMeta({ layout: 'book' })
 
@@ -81,27 +81,26 @@ function planOf(code: string): string {
 
 function maxQuantity(roomsLeft: number, threshold: number): number {
   const cap = property.value?.settings.stay.max_rooms_per_booking ?? roomsLeft
+  const requested = search.value?.rooms ?? cap
+  const inventoryCap = roomsLeft <= threshold ? Math.min(roomsLeft, cap) : cap
 
-  if (roomsLeft <= threshold) {
-    return Math.min(roomsLeft, cap)
-  }
-
-  return cap
+  return Math.min(inventoryCap, requested)
 }
 
 function setPick(code: string, quantity: number, ratePlan: string): void {
-  const next = picks.value.filter(pick => pick.roomType !== code)
-
-  if (quantity > 0) {
-    next.push({ roomType: code, quantity, ratePlan })
-  }
-
-  picks.value = next
   const current = search.value
 
-  if (current) {
-    void navigateTo({ path: '/book/rooms', query: stayQuery(current, picks.value) }, { replace: true })
+  if (!current) {
+    return
   }
+
+  picks.value = applyPick(picks.value, current.rooms, code, quantity, ratePlan)
+  void navigateTo({ path: '/book/rooms', query: stayQuery(current, picks.value) }, { replace: true })
+}
+
+function chooseRoomPlan(code: string, ratePlan: string): void {
+  plans.value[code] = ratePlan
+  setPick(code, Math.max(quantityOf(code), 1), ratePlan)
 }
 
 function changeNights(nights: number): void {
@@ -295,7 +294,7 @@ function roomKey(type: AvailabilityType): string {
         :sleeps="catalogue(type.code)?.max_occupancy ?? null"
         :plan-names="planNames"
         @update:quantity="setPick(type.code, $event, planOf(type.code))"
-        @update:plan="plans[type.code] = $event; setPick(type.code, quantityOf(type.code), $event)"
+        @update:plan="chooseRoomPlan(type.code, $event)"
         @change-nights="changeNights"
       />
     </div>
