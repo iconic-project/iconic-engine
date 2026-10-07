@@ -264,14 +264,15 @@ function reasonText(reason: ReturnType<typeof parseReason>): string {
         v-for="item in roomType.quotes"
         :key="item.rate_plan"
         class="book-rate"
-        :class="{ 'book-rate--on': plan === item.rate_plan && quantity > 0 }"
+        :class="{ 'book-rate--on': quantity > 0 && plan === item.rate_plan }"
+        @click.prevent="choosePlan(item.rate_plan)"
       >
         <input
           type="radio"
           :name="`plan-${roomType.code}`"
           :value="item.rate_plan"
-          :checked="plan === item.rate_plan"
-          @change="choosePlan(item.rate_plan)"
+          :checked="quantity > 0 && plan === item.rate_plan"
+          tabindex="-1"
         >
         <span
           v-if="item.rate_plan === lowestPlan"

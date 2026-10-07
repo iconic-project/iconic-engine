@@ -58,6 +58,44 @@ describe('room result card', () => {
     expect(nights).toEqual([3])
   })
 
+  it('selects the default plan on the first click', async () => {
+    const plans: Array<string> = []
+    const quantities: Array<number> = []
+    const wrapper = await mountSuspended(RoomResultCard, {
+      props: {
+        roomType: {
+          ...open,
+          quotes: [
+            open.quotes[0]!,
+            {
+              ...open.quotes[0]!,
+              rate_plan: 'NR',
+              total: 700,
+              night_lines: open.quotes[0]!.night_lines.map(line => ({ ...line, total: 230 }))
+            }
+          ]
+        },
+        threshold: 3,
+        quantity: 0,
+        maxQuantity: 5,
+        plan: 'BAR',
+        planNames: { BAR: 'Best available', NR: 'Non-refundable' },
+        'onUpdate:plan': (code: string) => {
+          plans.push(code)
+        },
+        'onUpdate:quantity': (quantity: number) => {
+          quantities.push(quantity)
+        }
+      }
+    })
+
+    const rates = wrapper.findAll('.book-rate')
+    expect(rates[0]?.find('input').attributes('checked')).toBeUndefined()
+    await rates[0]?.trigger('click')
+    expect(plans).toEqual(['BAR'])
+    expect(quantities).toEqual([1])
+  })
+
   it('shows the stay price and the nightly amount from the quote', async () => {
     const wrapper = await mountSuspended(RoomResultCard, {
       props: {
