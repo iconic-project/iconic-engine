@@ -326,6 +326,17 @@ body:has(.pikaia) {
   --book-black: #000;
   --book-ink: #170f0b;
   --book-line: #c8c4bc;
+  --fg-default: #170f0b;
+  --fg-primary: #170f0b;
+  --fg-muted: #4a453f;
+  --fg-subtle: #5c564f;
+  --ui-text: #170f0b;
+  --ui-text-highlighted: #170f0b;
+  --ui-text-toned: #3a342f;
+  --ui-text-muted: #4a453f;
+  --ui-text-dimmed: #5c564f;
+  color: #170f0b;
+  color-scheme: light;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -338,6 +349,30 @@ body:has(.pikaia) {
   background: #fff;
   box-shadow: 0 18px 48px rgb(23 15 11 / 28%);
   animation: reserve-in 220ms ease;
+}
+
+.pikaia-reserve-panel .book-destination,
+.pikaia-reserve-panel .book-guest-label,
+.pikaia-reserve-panel .book-stepper span,
+.pikaia-reserve-panel .ank-stay__summary,
+.pikaia-reserve-panel .ank-stay__day {
+  color: #170f0b;
+}
+
+.pikaia-reserve-panel .book-note,
+.pikaia-reserve-panel .book-guest-note,
+.pikaia-reserve-panel .book-kicker,
+.pikaia-reserve-panel .ank-stay__price {
+  color: #4a453f;
+}
+
+.pikaia-reserve-panel [data-selected] .ank-stay__day,
+.pikaia-reserve-panel [data-selection-start] .ank-stay__day,
+.pikaia-reserve-panel [data-selection-end] .ank-stay__day,
+.pikaia-reserve-panel [data-selected] .ank-stay__price,
+.pikaia-reserve-panel [data-selection-start] .ank-stay__price,
+.pikaia-reserve-panel [data-selection-end] .ank-stay__price {
+  color: #fff;
 }
 
 .pikaia-reserve-head {
