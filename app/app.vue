@@ -1,11 +1,11 @@
 <script setup lang="ts">
 useHead({
-  titleTemplate: '%s · Casa Pestagua',
+  titleTemplate: '%s · Pikaia Lodge',
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1' }
   ],
   link: [
-    { rel: 'icon', type: 'image/png', href: '/casa/assets/logo.png' }
+    { rel: 'icon', type: 'image/svg+xml', href: '/pikaia/assets/logo-ink.svg' }
   ],
   htmlAttrs: {
     lang: 'en'

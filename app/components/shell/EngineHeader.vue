@@ -10,11 +10,11 @@ const { stayOn } = useFlowStep()
       class="brand"
     >
       <img
-        class="casa-logo"
-        src="/casa/assets/logo.png"
-        width="350"
-        height="186"
-        :alt="t('casa.logoAlt')"
+        class="pikaia-logo"
+        src="/pikaia/assets/logo-ink.svg"
+        width="227"
+        height="104"
+        :alt="t('pikaia.logoAlt')"
       >
     </NuxtLink>
 

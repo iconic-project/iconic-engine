@@ -63,7 +63,7 @@ describe('room result card', () => {
     const quantities: Array<number> = []
     const wrapper = await mountSuspended(RoomResultCard, {
       props: {
-        roomType: {
+        'roomType': {
           ...open,
           quotes: [
             open.quotes[0]!,
@@ -75,11 +75,11 @@ describe('room result card', () => {
             }
           ]
         },
-        threshold: 3,
-        quantity: 0,
-        maxQuantity: 5,
-        plan: 'BAR',
-        planNames: { BAR: 'Best available', NR: 'Non-refundable' },
+        'threshold': 3,
+        'quantity': 0,
+        'maxQuantity': 5,
+        'plan': 'BAR',
+        'planNames': { BAR: 'Best available', NR: 'Non-refundable' },
         'onUpdate:plan': (code: string) => {
           plans.push(code)
         },

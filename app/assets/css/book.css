@@ -719,31 +719,31 @@
   font-variant-numeric: tabular-nums;
 }
 
-.casa-reserve-panel .book-search {
+.pikaia-reserve-panel .book-search {
   padding: 8px 0 0;
 }
 
-.casa-reserve-panel .book-search .ank-stay__calendar [data-slot="body"] > * {
+.pikaia-reserve-panel .book-search .ank-stay__calendar [data-slot="body"] > * {
   flex: 1 1 auto;
   width: 100%;
   min-width: 0;
 }
 
-.casa-reserve-panel .book-search .ank-stay__calendar [data-slot="cellTrigger"] {
+.pikaia-reserve-panel .book-search .ank-stay__calendar [data-slot="cellTrigger"] {
   min-height: 2.85rem;
   margin: 1px;
   padding: 4px 0 3px;
 }
 
-.casa-reserve-panel .book-search .ank-stay__calendar [data-slot="headingLabel"] {
+.pikaia-reserve-panel .book-search .ank-stay__calendar [data-slot="headingLabel"] {
   font-size: 16px;
 }
 
-.casa-reserve-panel .book-search .ank-stay__calendar .ank-stay__day {
+.pikaia-reserve-panel .book-search .ank-stay__calendar .ank-stay__day {
   font-size: 13px;
 }
 
-.casa-reserve-panel .book-search .ank-stay__calendar .ank-stay__price {
+.pikaia-reserve-panel .book-search .ank-stay__calendar .ank-stay__price {
   font-size: 8px;
   letter-spacing: 0;
 }

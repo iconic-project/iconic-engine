@@ -1,42 +1,34 @@
 {
   "seo": {
-    "description": "Casa Pestagua, a luxury boutique hotel in Cartagena de Indias."
+    "description": "Pikaia Lodge, a luxury eco-lodge in the Galápagos."
   },
   "nav": {
     "expeditions": "Expeditions",
     "charter": "Private Charter"
   },
   "brand": {
-    "alt": "Casa Pestagua Hotel",
+    "alt": "Pikaia Lodge",
     "subtitle": "ROOMS BY THE NIGHT"
   },
-  "casa": {
-    "logoAlt": "Casa Pestagua Hotel",
-    "metaTitle": "Casa Pestagua — Luxury boutique hotel in Cartagena",
-    "loader": "Casa Pestagua",
-    "welcome": "Welcome to Casa Pestagua",
-    "place": "– Cartagena de Indias, Colombia –",
+  "pikaia": {
+    "logoAlt": "Pikaia Lodge, Galápagos Islands",
+    "metaTitle": "Pikaia Lodge — Luxury Eco-Lodge in the Galápagos",
+    "loader": "Pikaia Lodge",
+    "heroLine1": "Explore Galápagos",
+    "heroLine2": "in a luxury and sustainable way",
     "scroll": "Scroll",
-    "galleryLabel": "Casa Pestagua gallery",
-    "entrada": "Entrance to the colonial courtyard",
-    "suite": "Suite with a timber ceiling and a four-poster bed",
-    "comedor": "Dining room with arched windows",
-    "historyTitle": "Step into three centuries of history",
-    "historyBody1": "Built in the 18th century and restored in 2022, Casa Pestagua stands inside the walled city of Cartagena, a UNESCO World Heritage Site for its historical and cultural importance.",
-    "historyLead": "A member of ",
-    "relais": "Relais & Châteaux",
-    "historyMid": " and the ",
-    "virtuoso": "Virtuoso",
-    "historyMid2": " network, and awarded ",
-    "michelin": "Two Michelin Keys",
-    "historyEnd": " in 2025, Casa Pestagua is a place where history, beauty and genuine hospitality meet, discreetly and without artifice.",
+    "galleryLabel": "Pikaia Lodge gallery",
+    "aerial": "Aerial view of the lodge and pool at sunset",
+    "crater": "The lodge on the crater rim above the green hillside",
+    "welcomeLine1": "Welcome to",
+    "welcomeLine2": "Pikaia Lodge",
+    "introBody": "Perched at the edge of an extinct volcanic crater, Pikaia Lodge offers a unique perspective on one of the world's last great paradises. Combining refined luxury with a deep commitment to sustainability and conservation, we invite guests to experience the Galápagos through meaningful encounters with nature, both on land and at sea.",
     "reserve": "Reserve now",
-    "houseEyebrow": "The house",
-    "houseTitle": "A palace reborn",
-    "houseBody1": "At Casa Pestagua, the 2022 restoration kept and brought forward every element as a place to live in, rather than a museum.",
-    "houseBody2": "Outside, Cartagena hums; inside, time is yours.",
-    "discover": "Discover more",
-    "terraceAlt": "Terrace and colonial courtyard at Casa Pestagua"
+    "stayEyebrow": "Accommodations",
+    "stayTitle": "Perched Above It All",
+    "stayBody1": "14 rooms into four different categories - Terrace, Balcony, Garden Suite and Pool Suite - each with unobstructed views across the Pacific ocean, the Galápagos National Park savannah, and volcanic peaks.",
+    "stayBody2": "Bamboo floors, travertine marble bathrooms, and floor-to-ceiling windows and comfort that doesn't compete with where you are.",
+    "suiteAlt": "Suite at Pikaia Lodge at sunrise"
   },
   "hero": {
     "coords": "0°40′S 90°33′W · Galápagos, Ecuador",
@@ -78,9 +70,9 @@
     "roomMany": "{n} rooms"
   },
   "footer": {
-    "line1": "Casa Pestagua · Hotel",
-    "line2Before": "Cartagena de Indias",
-    "line2After": " · Colombia"
+    "line1": "Pikaia Lodge",
+    "line2Before": "Galápagos",
+    "line2After": " · Ecuador"
   },
   "pages": {
     "home": "Book Your Expedition",

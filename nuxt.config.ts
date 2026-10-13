@@ -26,7 +26,7 @@ export default defineNuxtConfig({
     '@nuxt/eslint'
   ],
 
-  css: ['~/assets/css/engine.css', '~/assets/css/casa.css', '~/assets/css/book.css'],
+  css: ['~/assets/css/engine.css', '~/assets/css/pikaia.css', '~/assets/css/book.css'],
 
   runtimeConfig: {
     public: {
@@ -43,7 +43,7 @@ export default defineNuxtConfig({
     '/itineraries': { redirect: { to: '/rooms', statusCode: 301 } },
     '/itineraries/**': { redirect: { to: '/rooms', statusCode: 301 } },
     '/book/cabins': { redirect: { to: '/book/rooms', statusCode: 301 } },
-    '/casa/frames/**': {
+    '/pikaia/frames/**': {
       headers: {
         'cache-control': 'public, max-age=31536000, immutable'
       }

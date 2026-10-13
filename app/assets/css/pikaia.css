@@ -1,0 +1,578 @@
+/* Pikaia Lodge landing. Scoped so the booking flow keeps the HILO shell. */
+
+.pikaia {
+  --pikaia-cream: #ede9e4;
+  --pikaia-cream-dark: #e1d8cc;
+  --pikaia-ink: #170f0b;
+  --pikaia-accent: #7a6f6a;
+  --pikaia-muted: #bdb4af;
+  --pikaia-white: #fff;
+  --pikaia-display: "Helvetica Neue LT Std", "Helvetica Neue", "Archivo", Helvetica, Arial, sans-serif;
+  --pikaia-body: "Lato", system-ui, sans-serif;
+
+  min-height: 100vh;
+  background: var(--pikaia-ink);
+  color: var(--pikaia-cream);
+  font-family: var(--pikaia-body);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+html:has(.pikaia),
+body:has(.pikaia) {
+  background: #170f0b;
+}
+
+.pikaia h1,
+.pikaia h2 {
+  margin: 0;
+  font-family: var(--pikaia-display);
+  font-stretch: expanded;
+  font-weight: 100;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.pikaia-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pikaia-cream);
+  color: var(--pikaia-ink);
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+
+.pikaia-loader--hidden {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pikaia-loader-inner {
+  width: min(320px, 70vw);
+  text-align: center;
+}
+
+.pikaia-loader-label {
+  margin: 0 0 1.5rem;
+  font-family: var(--pikaia-display);
+  font-stretch: expanded;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  animation: pikaia-loader-breathe 2.4s ease-in-out infinite;
+}
+
+@keyframes pikaia-loader-breathe {
+  0%,
+  100% {
+    opacity: 0.72;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.pikaia-loader-bar {
+  height: 1px;
+  overflow: hidden;
+  background: rgb(23 15 11 / 16%);
+}
+
+.pikaia-loader-fill {
+  width: 0%;
+  height: 100%;
+  background: #6f6259;
+  transition: width 0.15s ease-out;
+}
+
+.pikaia-loader-percent {
+  margin: 1rem 0 0;
+  color: var(--pikaia-accent);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  font-variant-numeric: tabular-nums;
+}
+
+.pikaia-hero {
+  position: relative;
+  height: 625vh;
+}
+
+.pikaia-hero-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.pikaia-hero-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pikaia-hero-scrim {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity;
+  background:
+    linear-gradient(to bottom, rgb(23 15 11 / 45%), rgb(23 15 11 / 0%) 22%),
+    linear-gradient(to top, rgb(23 15 11 / 50%), rgb(23 15 11 / 0%) 30%);
+}
+
+.pikaia-hero-brand {
+  position: absolute;
+  top: 4vh;
+  left: 50%;
+  transform: translateX(-50%);
+  will-change: opacity;
+}
+
+.pikaia-hero-brand img {
+  display: block;
+  width: clamp(150px, 15vw, 220px);
+  height: auto;
+  filter: drop-shadow(0 1px 8px rgb(23 15 11 / 35%));
+}
+
+.pikaia-hero-title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8vw;
+  opacity: 0;
+  pointer-events: none;
+  text-align: center;
+  will-change: opacity, transform;
+}
+
+.pikaia-hero-title h1 {
+  color: var(--pikaia-white);
+  font-size: clamp(1.9rem, 4.6vw, 4.2rem);
+  letter-spacing: 0.015em;
+  line-height: 1.18;
+}
+
+.pikaia-hero-title h1 span {
+  color: var(--pikaia-cream-dark);
+}
+
+.pikaia-scroll {
+  position: absolute;
+  bottom: 5vh;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  transform: translateX(-50%);
+  will-change: opacity;
+}
+
+.pikaia-scroll span {
+  color: var(--pikaia-white);
+  font-family: var(--pikaia-display);
+  font-stretch: expanded;
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  text-transform: uppercase;
+}
+
+.pikaia-scroll-line {
+  width: 5px;
+  height: 100px;
+  transform-origin: top;
+  background: linear-gradient(to bottom, var(--pikaia-white), transparent);
+  animation: pikaia-hint-drop 1.8s ease-in-out infinite;
+}
+
+@keyframes pikaia-hint-drop {
+  0% {
+    transform: scaleY(0);
+  }
+
+  45% {
+    transform: scaleY(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+}
+
+.pikaia-intro {
+  padding: 18vh 6vw;
+  background: var(--pikaia-cream);
+  color: var(--pikaia-ink);
+  text-align: center;
+}
+
+.pikaia-intro-inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.pikaia-intro h2 {
+  font-size: clamp(1.7rem, 3.6vw, 3rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pikaia-intro-body {
+  margin: 2.6rem 0 3.2rem;
+  color: rgb(23 15 11 / 80%);
+  font-size: clamp(1rem, 1.35vw, 1.1rem);
+  line-height: 1.7;
+}
+
+.pikaia-dock {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+.pikaia-reserve-slot {
+  display: contents;
+}
+
+.pikaia-reserve-btn,
+.pikaia-book-btn {
+  margin: 0;
+  padding: 14px 18px;
+  border: 1px solid var(--pikaia-accent);
+  background: rgb(23 15 11 / 88%);
+  color: var(--pikaia-cream);
+  font-family: var(--pikaia-body);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.pikaia-reserve-btn {
+  position: fixed;
+  right: 22px;
+  bottom: 12px;
+  z-index: 40;
+}
+
+.pikaia-book-btn {
+  position: static;
+}
+
+.pikaia-reserve-btn:hover,
+.pikaia-book-btn:hover {
+  background: var(--pikaia-ink);
+  color: var(--pikaia-accent);
+}
+
+.pikaia-reserve-btn:disabled,
+.pikaia-book-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.pikaia-dock .pikaia-reserve-btn {
+  position: static;
+  right: auto;
+  bottom: auto;
+  z-index: auto;
+  margin: 0 22px 12px 0;
+}
+
+.pikaia-dock .consent-bar {
+  position: static;
+  align-self: stretch;
+  pointer-events: auto;
+}
+
+.pikaia-reserve-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+  background: rgb(23 15 11 / 46%);
+}
+
+.pikaia-reserve-panel {
+  --book-black: #000;
+  --book-ink: #170f0b;
+  --book-line: #c8c4bc;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(440px, 100%);
+  height: calc(100dvh - 32px);
+  max-height: calc(100dvh - 32px);
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 18px 48px rgb(23 15 11 / 28%);
+  animation: reserve-in 220ms ease;
+}
+
+.pikaia-reserve-head {
+  display: grid;
+  flex: none;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  min-height: 56px;
+  border-bottom: 1px solid #eceae6;
+}
+
+.pikaia .pikaia-reserve-head h2 {
+  margin: 0;
+  font-family: var(--pikaia-body);
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  letter-spacing: 0;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: none;
+  color: var(--pikaia-ink);
+}
+
+.pikaia-reserve-close {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: var(--pikaia-ink);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.pikaia-reserve-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 4px 18px 22px;
+  text-align: left;
+}
+
+.pikaia-reserve-body:has(.book-dock) {
+  padding-bottom: 96px;
+}
+
+.pikaia-reserve-panel .crumbs {
+  flex: none;
+  width: auto;
+  margin: 12px 16px 0;
+}
+
+.pikaia-reserve-panel .crumb {
+  padding: 8px 2px;
+  font-size: 9px;
+  letter-spacing: 0.03em;
+}
+
+.pikaia-reserve-panel h1 {
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-stretch: normal;
+  font-weight: 400;
+  font-size: 1.5rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.pikaia-reserve-panel .book-dock {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: auto;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+.pikaia-reserve-panel .book-dock-total {
+  flex: none;
+}
+
+.pikaia-reserve-panel .book-proceed {
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 0;
+  max-width: 100%;
+  padding: 14px 16px;
+  background: #000;
+  color: #fff;
+}
+
+.pikaia-reserve-panel .book-room-photo {
+  height: 180px;
+}
+
+@keyframes reserve-in {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pikaia-feature {
+  padding: 15vh 5vw;
+  background: var(--pikaia-ink);
+}
+
+.pikaia-feature-inner {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  align-items: center;
+  gap: clamp(2.5rem, 5vw, 5rem);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.pikaia-feature-eyebrow {
+  margin: 0 0 1.4rem;
+  color: var(--pikaia-accent);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.pikaia-feature h2 {
+  margin-bottom: 1.8rem;
+  color: var(--pikaia-cream);
+  font-size: clamp(1.5rem, 2.6vw, 2.3rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pikaia-feature-text p:not(.pikaia-feature-eyebrow) {
+  margin: 0 0 1.4rem;
+  color: rgb(237 233 228 / 78%);
+  font-size: clamp(0.95rem, 1.2vw, 1.02rem);
+  line-height: 1.75;
+}
+
+.pikaia-feature-text .pikaia-book-btn {
+  margin-top: 1.4rem;
+}
+
+.pikaia-feature-media img {
+  display: block;
+  width: 100%;
+  height: clamp(320px, 56vh, 620px);
+  object-fit: cover;
+}
+
+.pikaia-gallery {
+  padding: 15vh 5vw;
+  background: var(--pikaia-ink);
+}
+
+.pikaia-gallery-track {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.pikaia-gallery-card {
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: #2a211c;
+}
+
+.pikaia-gallery-card video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pikaia-logo {
+  display: block;
+  width: auto;
+  height: 56px;
+}
+
+@media (max-width: 860px) {
+  .pikaia-feature-inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .pikaia-gallery {
+    padding: 10vh 0;
+  }
+
+  .pikaia-gallery-track {
+    display: flex;
+    gap: 4vw;
+    overflow-x: auto;
+    padding: 0 11vw;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .pikaia-gallery-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pikaia-gallery-card {
+    flex: 0 0 78vw;
+    scroll-snap-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pikaia-hero {
+    height: 100vh;
+  }
+
+  .pikaia-scroll-line,
+  .pikaia-loader-label,
+  .pikaia-reserve-panel {
+    animation: none;
+  }
+}

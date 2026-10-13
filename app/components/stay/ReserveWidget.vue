@@ -126,22 +126,22 @@ onBeforeUnmount(() => {
 <template>
   <div
     v-if="open"
-    class="casa-reserve-scrim"
+    class="pikaia-reserve-scrim"
     @click="close"
   >
     <div
       ref="panel"
-      class="casa-reserve-panel"
+      class="pikaia-reserve-panel"
       role="dialog"
       aria-modal="true"
       aria-labelledby="reserve-title"
       @click.stop
     >
-      <header class="casa-reserve-head">
+      <header class="pikaia-reserve-head">
         <button
           v-if="step === 'rooms' || step === 'details'"
           type="button"
-          class="casa-reserve-close"
+          class="pikaia-reserve-close"
           :aria-label="t('book.back')"
           @click="back"
         >
@@ -154,7 +154,7 @@ onBeforeUnmount(() => {
         <button
           v-if="step !== 'confirmation'"
           type="button"
-          class="casa-reserve-close"
+          class="pikaia-reserve-close"
           data-reserve-close
           :aria-label="t('book.close')"
           @click="close"
@@ -164,7 +164,7 @@ onBeforeUnmount(() => {
         <span v-else />
       </header>
       <ShellEngineCrumbs v-if="step !== 'search' && step !== 'confirmation'" />
-      <div class="casa-reserve-body">
+      <div class="pikaia-reserve-body">
         <StaySearchBar
           v-show="step === 'search'"
           :property-name="propertyName"

@@ -3,7 +3,7 @@ import type { PropertyFeed } from '../types/stay'
 import { mediaUrl } from '../utils/mediaUrl'
 import type { StaySearch } from '../utils/stayQuery'
 
-definePageMeta({ layout: 'casa' })
+definePageMeta({ layout: 'pikaia' })
 
 const { t } = useI18n()
 const { request } = useApi()
@@ -20,9 +20,8 @@ const heroScrim = ref<HTMLElement | null>(null)
 const heroTitle = ref<HTMLElement | null>(null)
 const scrollHint = ref<HTMLElement | null>(null)
 const gallery = ref<HTMLElement | null>(null)
-const galleryTrack = ref<HTMLElement | null>(null)
 
-useCasaFilm({
+usePikaiaFilm({
   hero,
   canvas,
   loader,
@@ -32,8 +31,7 @@ useCasaFilm({
   heroScrim,
   heroTitle,
   scrollHint,
-  gallery,
-  galleryTrack
+  gallery
 })
 
 const { data: feed } = await useAsyncData('engine-property', () =>
@@ -84,8 +82,8 @@ const hotelSchema = computed(() => {
 })
 
 useSeoMeta({
-  title: () => property.value?.meta_title || t('casa.metaTitle'),
-  description: () => property.value?.meta_description || property.value?.description || t('casa.historyBody1')
+  title: () => property.value?.meta_title || t('pikaia.metaTitle'),
+  description: () => property.value?.meta_description || property.value?.description || t('pikaia.introBody')
 })
 
 useHead({
@@ -118,21 +116,21 @@ function search(value: StaySearch): void {
   <div>
     <div
       ref="loader"
-      class="casa-loader"
+      class="pikaia-loader"
     >
-      <div class="casa-loader-inner">
-        <p class="casa-loader-label">
-          {{ t('casa.loader') }}
+      <div class="pikaia-loader-inner">
+        <p class="pikaia-loader-label">
+          {{ t('pikaia.loader') }}
         </p>
-        <div class="casa-loader-bar">
+        <div class="pikaia-loader-bar">
           <div
             ref="loaderFill"
-            class="casa-loader-fill"
+            class="pikaia-loader-fill"
           />
         </div>
         <p
           ref="loaderPercent"
-          class="casa-loader-percent"
+          class="pikaia-loader-percent"
         >
           0%
         </p>
@@ -140,104 +138,86 @@ function search(value: StaySearch): void {
     </div>
 
     <section
-      id="casa-hero"
+      id="pikaia-hero"
       ref="hero"
-      class="casa-hero"
+      class="pikaia-hero"
     >
-      <div class="casa-hero-sticky">
+      <div class="pikaia-hero-sticky">
         <canvas
           ref="canvas"
-          class="casa-hero-canvas"
+          class="pikaia-hero-canvas"
           aria-hidden="true"
         />
         <div
           ref="heroScrim"
-          class="casa-hero-scrim"
+          class="pikaia-hero-scrim"
         />
 
         <header
           ref="heroBrand"
-          class="casa-hero-brand"
+          class="pikaia-hero-brand"
         >
           <img
-            src="/casa/assets/logo.png"
-            :alt="t('casa.logoAlt')"
-            width="350"
-            height="186"
+            src="/pikaia/assets/logo.svg"
+            :alt="t('pikaia.logoAlt')"
+            width="227"
+            height="104"
           >
         </header>
 
         <div
           ref="heroTitle"
-          class="casa-hero-title"
+          class="pikaia-hero-title"
         >
-          <h2>{{ t('casa.welcome') }}</h2>
-          <p class="casa-hero-sub">
-            {{ t('casa.place') }}
-          </p>
+          <h1>
+            {{ t('pikaia.heroLine1') }}<br>
+            <span>{{ t('pikaia.heroLine2') }}</span>
+          </h1>
         </div>
 
         <div
           ref="scrollHint"
-          class="casa-scroll"
+          class="pikaia-scroll"
         >
-          <span>{{ t('casa.scroll') }}</span>
-          <div class="casa-scroll-line" />
+          <span>{{ t('pikaia.scroll') }}</span>
+          <div class="pikaia-scroll-line" />
         </div>
       </div>
     </section>
 
     <section
-      id="casa-gallery"
+      id="pikaia-gallery"
       ref="gallery"
-      class="casa-gallery"
-      :aria-label="t('casa.galleryLabel')"
+      class="pikaia-gallery"
+      :aria-label="t('pikaia.galleryLabel')"
     >
-      <div
-        ref="galleryTrack"
-        class="casa-gallery-track"
-      >
-        <figure class="casa-gallery-card">
+      <div class="pikaia-gallery-track">
+        <figure class="pikaia-gallery-card">
           <video
             muted
             loop
             playsinline
             preload="none"
-            poster="/casa/videos/entrada.webp"
-            :aria-label="t('casa.entrada')"
+            poster="/pikaia/videos/aerea.webp"
+            :aria-label="t('pikaia.aerial')"
           >
             <source
-              src="/casa/videos/entrada.mp4"
+              src="/pikaia/videos/aerea.mp4"
               type="video/mp4"
             >
           </video>
         </figure>
-        <figure class="casa-gallery-card casa-gallery-card--main">
+        <figure class="pikaia-gallery-card">
           <video
             muted
             loop
             playsinline
             preload="none"
-            poster="/casa/videos/suite.webp"
-            :aria-label="t('casa.suite')"
+            poster="/pikaia/videos/cabanas.webp"
+            :aria-label="t('pikaia.crater')"
           >
             <source
-              src="/casa/videos/suite.mp4"
-              type="video/mp4"
-            >
-          </video>
-        </figure>
-        <figure class="casa-gallery-card">
-          <video
-            muted
-            loop
-            playsinline
-            preload="none"
-            poster="/casa/videos/comedor.webp"
-            :aria-label="t('casa.comedor')"
-          >
-            <source
-              src="/casa/videos/comedor.mp4"
+              src="/pikaia/videos/cabanas.mp4"
               type="video/mp4"
             >
           </video>
@@ -245,59 +225,67 @@ function search(value: StaySearch): void {
       </div>
     </section>
 
-    <section class="casa-intro">
-      <div class="casa-intro-inner">
-        <h2>{{ t('casa.historyTitle') }}</h2>
-        <p class="casa-intro-body">
-          {{ t('casa.historyBody1') }}
-        </p>
-        <p class="casa-intro-body">
-          {{ t('casa.historyLead') }}<strong>{{ t('casa.relais') }}</strong>{{ t('casa.historyMid') }}<strong>{{ t('casa.virtuoso') }}</strong>{{ t('casa.historyMid2') }}<strong>{{ t('casa.michelin') }}</strong>{{ t('casa.historyEnd') }}
+    <section class="pikaia-intro">
+      <div class="pikaia-intro-inner">
+        <h2>
+          {{ t('pikaia.welcomeLine1') }}<br>
+          {{ t('pikaia.welcomeLine2') }}
+        </h2>
+        <p class="pikaia-intro-body">
+          {{ t('pikaia.introBody') }}
         </p>
         <button
           type="button"
-          class="casa-cta"
+          class="pikaia-book-btn"
+          :disabled="!feed"
           @click="openReserve"
         >
-          {{ t('casa.reserve') }}
+          {{ t('pikaia.reserve') }}
         </button>
       </div>
     </section>
 
-    <section class="casa-feature">
-      <div class="casa-feature-text">
-        <p class="casa-feature-eyebrow">
-          {{ t('casa.houseEyebrow') }}
-        </p>
-        <h2>{{ t('casa.houseTitle') }}</h2>
-        <p>{{ t('casa.houseBody1') }}</p>
-        <p>{{ t('casa.houseBody2') }}</p>
-        <a
-          class="casa-cta"
-          href="#casa-gallery"
-        >{{ t('casa.discover') }}</a>
-      </div>
-      <div class="casa-feature-media">
-        <img
-          src="/casa/frames/f_0200.webp"
-          :alt="t('casa.terraceAlt')"
-          width="1200"
-          height="802"
-        >
+    <section class="pikaia-feature">
+      <div class="pikaia-feature-inner">
+        <div class="pikaia-feature-media">
+          <img
+            src="/pikaia/frames/f_0001.webp"
+            :alt="t('pikaia.suiteAlt')"
+            width="1200"
+            height="675"
+          >
+        </div>
+        <div class="pikaia-feature-text">
+          <p class="pikaia-feature-eyebrow">
+            {{ t('pikaia.stayEyebrow') }}
+          </p>
+          <h2>{{ t('pikaia.stayTitle') }}</h2>
+          <p>{{ t('pikaia.stayBody1') }}</p>
+          <p>{{ t('pikaia.stayBody2') }}</p>
+          <button
+            type="button"
+            class="pikaia-book-btn"
+            :disabled="!feed"
+            @click="openReserve"
+          >
+            {{ t('pikaia.reserve') }}
+          </button>
+        </div>
       </div>
     </section>
 
     <Teleport
       defer
-      to="#casa-reserve-slot"
+      to="#pikaia-reserve-slot"
     >
       <button
-        v-if="feed && !reserveOpen"
+        v-if="!reserveOpen"
         type="button"
-        class="casa-reserve-btn"
+        class="pikaia-reserve-btn"
+        :disabled="!feed"
         @click="openReserve"
       >
-        {{ t('casa.reserve') }}
+        {{ t('pikaia.reserve') }}
       </button>
     </Teleport>
 
